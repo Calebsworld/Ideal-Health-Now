@@ -1,4 +1,4 @@
-package com.aca.Schedulingapp.model;
+package com.aca.IdealHealthNow.model;
 
 public enum AppointmentType {
 	

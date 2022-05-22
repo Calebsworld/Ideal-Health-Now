@@ -1,19 +1,25 @@
-package com.aca.Schedulingapp.model;
+package com.aca.IdealHealthNow.model;
+
+import java.time.LocalDateTime;
 
 public class Patient {
 
-	private String fullName;
+	private int patientId;
+	private String name;
 	private String emailAddress;
 	private String PhoneNumber;
-	
+	private String email;
+	private String phoneNumber;
+	private LocalDateTime UpdateDateTime;
+	private LocalDateTime CreateDateTime;
 	
 	
 	
 	public String getFullName() {
-		return fullName;
+		return name;
 	}
 	public void setFullName(String fullName) {
-		this.fullName = fullName;
+		this.name = fullName;
 	}
 	public String getEmailAddress() {
 		return emailAddress;
