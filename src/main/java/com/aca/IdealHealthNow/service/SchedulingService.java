@@ -2,6 +2,7 @@ package com.aca.IdealHealthNow.service;
 
 import java.util.List;
 
+import com.aca.IdealHealthNow.Exception.DataNotFoundException;
 import com.aca.IdealHealthNow.dao.ShedulingDao;
 import com.aca.IdealHealthNow.dao.schedulingDaoImpl;
 import com.aca.IdealHealthNow.model.Coach;
@@ -11,13 +12,33 @@ public class SchedulingService {
 
 	ShedulingDao schedulingDao = new schedulingDaoImpl();
 	
+	private void validateCoachId(Integer coachId) {
+		if (coachId == null || coachId <= 0) {
+			throw new DataNotFoundException("Not a valid coachId '" + coachId + "'- coachId must be > 0.");
+		}  
+		boolean doesExist = false;
+		List<Coach> coaches = getCoaches();
+		for (Coach coach : coaches) {
+			if (coach.getCoachId().equals(coachId)) {
+				doesExist = true;
+			}
+		}
+		
+		if (!doesExist) {
+			throw new DataNotFoundException("Not a valid coachId '" + coachId + "'- coachId does not exist");
+		}
+		
+		
+	}
+	
 	public List<Coach> getCoaches() {
 		return schedulingDao.getCoaches();
 	}
 
 	
-	public Coach getCoachById() {
-		return schedulingDao.getCoachById();
+	public List<Coach> getCoachById(Integer coachId) {
+		validateCoachId(coachId);
+		return schedulingDao.getCoachById(coachId);
 	}
 
 	
@@ -27,13 +48,13 @@ public class SchedulingService {
 	}
 
 	
-	public Coach updateCoach() {
-		return schedulingDao.updateCoach();
+	public Coach updateCoach(Coach updateCoach) {
+		return schedulingDao.updateCoach(updateCoach);
 	}
 
 	
-	public Coach deleteCoach() {
-		return schedulingDao.deleteCoach();
+	public Coach deleteCoach(Integer coachId) {
+		return schedulingDao.deleteCoach(coachId);
 	}
 
 	
@@ -42,7 +63,7 @@ public class SchedulingService {
 	}
 
 	
-	public Patient getPatientById() {
+	public List<Patient> getPatientById() {
 		return schedulingDao.getPatientById();
 	}
 

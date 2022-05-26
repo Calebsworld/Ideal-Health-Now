@@ -8,12 +8,12 @@ import com.aca.IdealHealthNow.model.Patient;
 public interface ShedulingDao {
 
 	public List<Coach> getCoaches();
-	public Coach getCoachById();
+	public List<Coach> getCoachById(Integer coachId);
 	public Coach createCoach(Coach coach);
-	public Coach updateCoach();
-	public Coach deleteCoach();
+	public Coach updateCoach(Coach coach);
+	public Coach deleteCoach(Integer coachId);
 	public List<Patient> getPatients();
-	public Patient getPatientById();
+	public List<Patient> getPatientById();
 	public Patient createPatient();
 	public Patient updatePatient();
 	public Patient deletePatient();
