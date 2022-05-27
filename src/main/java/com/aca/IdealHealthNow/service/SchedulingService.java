@@ -12,6 +12,8 @@ public class SchedulingService {
 
 	ShedulingDao schedulingDao = new schedulingDaoImpl();
 	
+	//coaches
+	
 	private void validateCoachId(Integer coachId) {
 		if (coachId == null || coachId <= 0) {
 			throw new DataNotFoundException("Not a valid coachId '" + coachId + "'- coachId must be > 0.");
@@ -58,28 +60,50 @@ public class SchedulingService {
 	}
 
 	
+	// Patients
+	
+	private void validatePatientId(Integer patientId) {
+		if (patientId == null || patientId <= 0) {
+			throw new DataNotFoundException("Not a valid patientId '" + patientId + "'- patientId must be > 0.");
+		}  
+		boolean doesExist = false;
+		List<Patient> patients = getPatients();
+		for (Patient patient : patients) {
+			if (patient.getPatientId().equals(patientId)) {
+				doesExist = true;
+			}
+		}
+		
+		if (!doesExist) {
+			throw new DataNotFoundException("Not a valid patientId '" + patientId + "'- patientId does not exist");
+		}
+		
+		
+	}
+	
 	public List<Patient> getPatients() {
 		return schedulingDao.getPatients();
 	}
 
 	
-	public List<Patient> getPatientById() {
-		return schedulingDao.getPatientById();
+	public List<Patient> getPatientsById(Integer patientId) {
+		validatePatientId(patientId);
+		return schedulingDao.getPatientsById(patientId);
 	}
 
 	
-	public Patient createPatient() {
-		return schedulingDao.createPatient();
+	public Patient createPatient(Patient patient) {
+		return schedulingDao.createPatient(patient);
 	}
 
 	
-	public Patient updatePatient() {
-		return schedulingDao.updatePatient();
+	public Patient updatePatient(Patient updatePatient) {
+		return schedulingDao.updatePatient(updatePatient);
 	}
 
 
-	public Patient deletePatient() {
-		return schedulingDao.deletePatient();
+	public Patient deletePatient(Integer patientId) {
+		return schedulingDao.deletePatient(patientId);
 	}
 	
 	

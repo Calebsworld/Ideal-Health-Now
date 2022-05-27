@@ -16,11 +16,11 @@ import com.aca.IdealHealthNow.model.Patient;
 public class schedulingDaoImpl implements ShedulingDao {
 
 	private static String SelectAllCoaches = 
-			"SELECT id, firstName, lastName, updateDateTime, createDateTime " +
+			"SELECT coachId, firstName, lastName, updateDateTime, createDateTime " +
 			"FROM coaches " ;
 	
 	private static String SelectCoachById = 
-			"SELECT id, firstName, lastName, updateDateTime, createDateTime " +
+			"SELECT coachId, firstName, lastName, updateDateTime, createDateTime " +
 			"FROM coaches " +
 			"WHERE id = ? ";
 	
@@ -35,18 +35,44 @@ public class schedulingDaoImpl implements ShedulingDao {
 	private static String updateCoachById = 
 			"UPDATE coaches " +
 			"SET firstName = ?, lastName = ? " +
-			"WHERE id = ? ";
+			"WHERE coachId = ? ";
 	
 	private static String deleteCoachById = 
 			"DELETE FROM coaches " +
-			"WHERE id = ? ";
+			"WHERE coachId = ? ";
+	
+	private static String selectAllPatients = 
+			"SELECT patientId, firstName, lastName, emailAddress, phoneNumber, updateDateTime, CreateDateTime " + 
+			"FROM patients ";
+	
+	private static String selectPatientById = 
+			"SELECT patientId, firstName, lastName, emailAddress, phoneNumber, updateDateTime, CreateDateTime " + 
+					"FROM patients " + 
+					"WHERE patientId = ? ";
+	
+	private static String selectNewPatientId = 
+			"Select Last_Insert_ID() As patientId ";
+	
+	private static String createPatient = 
+			"INSERT into patients (firstName, lastName, emailAddress, phoneNumber) " +
+			"VALUES " + 
+			"(?, ?, ?, ?) ";
+			
+	private static String updatePatientById =
+			"Update patients " +
+			"SET firstName = ?, lastName = ?, emailAddress = ?, phoneNumber = ? " +
+			"WHERE patientId = ? "; 
+	
+	private static String deletePatientById =
+			"DELETE FROM patients " +
+			"WHERE patientId = ? ";
 	
 
 	private List<Coach> makeCoaches(ResultSet result) throws SQLException {
 		List <Coach> coaches = new ArrayList<>();
 		while (result.next()) {
 			Coach coach = new Coach();
-			coach.setCoachId(result.getInt("id"));
+			coach.setCoachId(result.getInt("coachId"));
 			coach.setFirstName(result.getString("firstName"));
 			coach.setLastName(result.getString("lastName"));
 			coach.setUpdateDateTime(result.getObject("updateDateTime", LocalDateTime.class));
@@ -223,34 +249,187 @@ public class schedulingDaoImpl implements ShedulingDao {
 		return coachToDelete;
 	}
 
+	private List<Patient> makePatients(ResultSet rs) throws SQLException {
+		List<Patient> patients = new ArrayList<>();
+		while (rs.next()) {
+			Patient patient = new Patient();
+			patient.setPatientId(rs.getInt("patientId"));
+			patient.setFirstName(rs.getString("firstName"));
+			patient.setLastName(rs.getString("lastName"));
+			patient.setEmailAddress(rs.getString("emailAddress"));
+			patient.setPhoneNumber(rs.getString("phoneNumber"));
+			patient.setUpdateDateTime(rs.getObject("updateDateTime", LocalDateTime.class));
+			patient.setCreateDateTime(rs.getObject("createDateTime", LocalDateTime.class));
+			patients.add(patient);
+			}
+		return patients;
+	}
+	
 	@Override
 	public List<Patient> getPatients() {
-		// TODO Auto-generated method stub
-		return null;
+			List<Patient> patients = new ArrayList<>();
+			ResultSet rs = null;
+			Statement st = null;
+			
+			Connection conn = MariaDbUtil.getConnection();
+			try {
+				st = conn.createStatement();
+				rs = st.executeQuery(selectAllPatients);
+				patients = makePatients(rs);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					rs.close();
+					st.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		
+		return patients;
 	}
 
 	@Override
-	public List<Patient> getPatientById() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Patient> getPatientsById(Integer patientId) {
+		List<Patient> patients = this.getPatients();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		Connection conn = MariaDbUtil.getConnection();
+		try {
+			ps = conn.prepareStatement(selectPatientById);
+			ps.setInt(1, patientId);
+			rs = ps.executeQuery();
+			patients = makePatients(rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return patients;
+	}
+
+	private Integer getNewPatientId(Connection conn) {
+		ResultSet rs = null;
+		Statement st = null;
+		Integer newPatientId = null;
+		
+		try {
+			st = conn.createStatement();
+			rs = st.executeQuery(selectNewPatientId);
+			while (rs.next()) {
+				newPatientId = rs.getInt("patientId");
+			}
+		} catch (SQLException e) {
+			try {
+				rs.close();
+				st.close();
+				conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+
+		return newPatientId;
+	}
+	
+	@Override
+	public Patient createPatient(Patient patient) {
+		int updateRowCount = 0;
+		PreparedStatement ps = null;
+		
+		Connection conn = MariaDbUtil.getConnection();
+		try {
+			ps = conn.prepareStatement(createPatient);
+			ps.setString(1, patient.getFirstName());
+			ps.setString(2, patient.getLastName());
+			ps.setString(3, patient.getEmailAddress());
+			ps.setString(4, patient.getPhoneNumber());
+			updateRowCount = ps.executeUpdate();
+			System.out.println("rows updated: " + updateRowCount);
+			Integer newPatientId = getNewPatientId(conn);
+			patient.setPatientId(newPatientId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} try {
+			ps.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
+		return patient;
 	}
 
 	@Override
-	public Patient createPatient() {
-		// TODO Auto-generated method stub
-		return null;
+	public Patient updatePatient(Patient updatePatient) {
+		List<Patient> patients = this.getPatientsById(updatePatient.getPatientId());
+		if (patients.size() > 0) {
+			int updateRowCount = 0;
+			PreparedStatement ps = null;
+			Connection conn = MariaDbUtil.getConnection();
+			try {
+				ps = conn.prepareStatement(updatePatientById);
+				ps.setString(1, updatePatient.getFirstName());
+				ps.setString(2, updatePatient.getLastName());
+				ps.setString(3, updatePatient.getEmailAddress());
+				ps.setString(4, updatePatient.getPhoneNumber());
+				ps.setInt(5, updatePatient.getPatientId());
+				updateRowCount = ps.executeUpdate();
+				System.out.println("rows updated: " + updateRowCount);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					ps.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return updatePatient;
 	}
 
 	@Override
-	public Patient updatePatient() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Patient deletePatient() {
-		// TODO Auto-generated method stub
-		return null;
+	public Patient deletePatient(Integer patientId) {
+		Patient patientToDelete = null;
+		List<Patient> patients = getPatientsById(patientId);
+		if (patients.size() > 0) {
+			patientToDelete = patients.get(0);
+			int updateRowCount = 0;
+			PreparedStatement ps = null;
+			Connection conn = MariaDbUtil.getConnection(); 
+			try {
+				ps = conn.prepareStatement(deletePatientById);
+				ps.setInt(1, patientId);
+				updateRowCount = ps.executeUpdate();
+				System.out.println("rows updated: " + updateRowCount);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					ps.close();
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return patientToDelete;
 	}
 
 }
