@@ -2,27 +2,19 @@ package com.aca.IdealHealthNow.model;
 
 import java.time.LocalDateTime;
 
-public class Patient {
+public class Patient extends Person{
 
-	private Integer patientId;
-	private String firstName;
-	private String lastName;
 	private String emailAddress;
 	private String phoneNumber;
 	private LocalDateTime updateDateTime;
 	private LocalDateTime createDateTime;
+	private Appointment appointment;
 	
-	public String getFirstName() {
-		return firstName;
+	public Appointment getAppointment() {
+		return appointment;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setAppointment(Appointment appointment) {
+		this.appointment = appointment;
 	}
 	public String getEmailAddress() {
 		return emailAddress;
@@ -47,12 +39,6 @@ public class Patient {
 	}
 	public void setCreateDateTime(LocalDateTime createDateTime) {
 		this.createDateTime = createDateTime;
-	}
-	public Integer getPatientId() {
-		return patientId;
-	}
-	public void setPatientId(Integer patientId) {
-		this.patientId = patientId;
 	}
 	
 	

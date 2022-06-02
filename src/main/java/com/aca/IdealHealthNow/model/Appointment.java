@@ -1,14 +1,29 @@
 package com.aca.IdealHealthNow.model;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+
 
 public class Appointment {
 
 	private int apptId;
 	private AppointmentType apptName;
+	private LocalDateTime startTime;
+	private LocalDateTime endTime;
 	private long duration;
 
 	
+	public LocalDateTime getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(LocalDateTime startTime) {
+		this.startTime = startTime;
+	}
+	public LocalDateTime getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(LocalDateTime endTime) {
+		this.endTime = endTime;
+	}
 	public int getApptId() {
 		return apptId;
 	}

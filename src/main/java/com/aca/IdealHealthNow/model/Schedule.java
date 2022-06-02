@@ -6,7 +6,22 @@ import java.util.List;
 
 public class Schedule {
 
-	private List<String> days = new ArrayList<>();
-	private LocalTime time;
+	private List<Appointment> appointments = new ArrayList<>();
+
+	
+	
+	
+	
+	
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
+	}
+	
+	
+	
 	
 }

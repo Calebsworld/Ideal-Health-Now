@@ -21,7 +21,7 @@ public class SchedulingService {
 		boolean doesExist = false;
 		List<Coach> coaches = getCoaches();
 		for (Coach coach : coaches) {
-			if (coach.getCoachId().equals(coachId)) {
+			if (coach.getId().equals(coachId)) {
 				doesExist = true;
 			}
 		}
@@ -43,6 +43,9 @@ public class SchedulingService {
 		return schedulingDao.getCoachById(coachId);
 	}
 
+	public List<Coach> getCoachByFullName(String coachFirstName, String coachLastName) {
+		return schedulingDao.getCoachByFullName(coachFirstName, coachLastName);
+	}
 	
 	public Coach createCoach(Coach coach) {
 		return schedulingDao.createCoach(coach);
@@ -69,7 +72,7 @@ public class SchedulingService {
 		boolean doesExist = false;
 		List<Patient> patients = getPatients();
 		for (Patient patient : patients) {
-			if (patient.getPatientId().equals(patientId)) {
+			if (patient.getId().equals(patientId)) {
 				doesExist = true;
 			}
 		}
@@ -105,6 +108,12 @@ public class SchedulingService {
 	public Patient deletePatient(Integer patientId) {
 		return schedulingDao.deletePatient(patientId);
 	}
+
+	public List<Patient> getPatientsByFullName(String patientFirstName, String patientLastName) {
+		return schedulingDao.getPatientsByFullName(patientFirstName, patientLastName);
+	}
+
+	
 	
 	
 }

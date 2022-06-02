@@ -3,35 +3,18 @@ package com.aca.IdealHealthNow.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Coach {
-
-	@Override
-	public String toString() {
-		return "Coach [coachId: " + coachId + ", firstName: " + firstName + ", lastName=" + lastName + "]";
-	}
-	private Integer coachId;
-	private String firstName;
-	private String lastName;
+public class Coach extends Person {
+	
 	private LocalDateTime UpdateDateTime;
 	private LocalDateTime CreateDateTime;
-		
-	public Integer getCoachId() {
-		return coachId;
+	private WorkWeek workWeek;
+	
+	
+	public WorkWeek getWorkWeek() {
+		return workWeek;
 	}
-	public void setCoachId(Integer coachId) {
-		this.coachId = coachId;
-	}
-	public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setWorkWeek(WorkWeek workWeek) {
+		this.workWeek = workWeek;
 	}
 	
 	public LocalDateTime getUpdateDateTime() {
@@ -46,6 +29,7 @@ public class Coach {
 	public void setCreateDateTime(LocalDateTime createDateTime) {
 		CreateDateTime = createDateTime;
 	}
+	
 	
 	
 	

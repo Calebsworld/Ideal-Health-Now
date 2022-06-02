@@ -14,6 +14,7 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
 @Path("/Home")
@@ -30,9 +31,20 @@ public class SchedulingAppController {
 	   
 		@Path("coaches/{coachIdValue}")
 		@GET
+		@Consumes(MediaType.APPLICATION_JSON)
 		public List<Coach> getCoachById (@PathParam ("coachIdValue") Integer coachId) {
 			return service.getCoachById(coachId);
 		}
+		
+		@Path("/coaches/coach")
+	    @GET
+	    @Consumes(MediaType.APPLICATION_JSON)
+	    public List<Coach> getCoachByFullName(
+	    		@QueryParam("coachFirstName") String coachFirstName,
+	    		@QueryParam("coachLastName") String coachLastName) {
+	        return service.getCoachByFullName(coachFirstName, coachLastName);
+	    }
+	   
 		
 		@Path("/coaches")
 	    @POST 
@@ -67,6 +79,15 @@ public class SchedulingAppController {
 	    @GET
 	    public List<Patient> getPatientsById(@PathParam ("patientIdValue") Integer patientId) {
 	    	return service.getPatientsById(patientId);
+	    }
+	    
+	    @Path("/patients/patient")
+	    @GET
+	    @Consumes(MediaType.APPLICATION_JSON)
+	    public List<Patient> getPatientsByLastName(
+	    		@QueryParam("patientFirstName") String patientFirstName,
+	    		@QueryParam("patientLastName") String patientLastName) {
+	    	return service.getPatientsByFullName(patientFirstName, patientLastName);
 	    }
 	    
 	    @Path("/patients")

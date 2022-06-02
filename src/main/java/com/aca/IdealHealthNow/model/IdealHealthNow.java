@@ -5,17 +5,31 @@ import java.util.List;
 
 public class IdealHealthNow {
 
-	private List<Coach> healthCoaches;
+	private List<Coach> coaches;
+	private List<Patient> patients;
+	private List<Product> products;
 	private String email;
 	private String password;
 	private String phoneNumber;
 	
 	
-	public List<Coach> getHealthCoaches() {
-		return healthCoaches;
+	public List<Product> getProducts() {
+		return products;
 	}
-	public void setHealthCoaches(List<Coach> healthCoaches) {
-		this.healthCoaches = healthCoaches;
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+	public List<Coach> getCoaches() {
+		return coaches;
+	}
+	public void setCoaches(List<Coach> coaches) {
+		this.coaches = coaches;
+	}
+	public List<Patient> getPatients() {
+		return patients;
+	}
+	public void setPatients(List<Patient> patients) {
+		this.patients = patients;
 	}
 	public String getEmail() {
 		return email;
