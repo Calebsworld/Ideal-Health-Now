@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public class Appointment {
 
-	private int apptId;
+	private Integer apptId;
 	private AppointmentType apptName;
 	private LocalDateTime startTime;
 	private LocalDateTime endTime;
@@ -24,10 +24,10 @@ public class Appointment {
 	public void setEndTime(LocalDateTime endTime) {
 		this.endTime = endTime;
 	}
-	public int getApptId() {
+	public Integer getApptId() {
 		return apptId;
 	}
-	public void setApptId(int apptId) {
+	public void setApptId(Integer apptId) {
 		this.apptId = apptId;
 	}
 	public AppointmentType getApptName() {

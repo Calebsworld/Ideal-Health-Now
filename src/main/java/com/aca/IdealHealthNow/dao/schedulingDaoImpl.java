@@ -9,8 +9,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.aca.IdealHealthNow.model.Appointment;
 import com.aca.IdealHealthNow.model.Coach;
 import com.aca.IdealHealthNow.model.Patient;
+import com.aca.IdealHealthNow.model.Schedule;
 
 
 public class schedulingDaoImpl implements ShedulingDao {
@@ -497,6 +499,43 @@ public class schedulingDaoImpl implements ShedulingDao {
 		}
 		
 		return patientToDelete;
+	}
+
+	@Override
+	public Schedule getScheduleByCoachWorkDay(Coach coach) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Appointment getAppointmentById(Integer apptId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	@Override
+	public Appointment getPatientsByApptDateRange(LocalDateTime startTime, LocalDateTime endTime) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Appointment createNewAppointment(Appointment appt) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Appointment updateAppointment(Appointment updateAppt) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Appointment deleteAppointmentById(Integer apptId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

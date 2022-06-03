@@ -1,9 +1,12 @@
 package com.aca.IdealHealthNow.dao;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import com.aca.IdealHealthNow.model.Appointment;
 import com.aca.IdealHealthNow.model.Coach;
 import com.aca.IdealHealthNow.model.Patient;
+import com.aca.IdealHealthNow.model.Schedule;
 
 public interface ShedulingDao {
 
@@ -19,4 +22,11 @@ public interface ShedulingDao {
 	public Patient createPatient(Patient patient);
 	public Patient updatePatient(Patient updatePatient);
 	public Patient deletePatient(Integer PatientId);
+	public Appointment getAppointmentById(Integer apptId);
+	public Appointment createNewAppointment(Appointment appt);
+	public Appointment updateAppointment(Appointment updateAppt);
+	public Appointment deleteAppointmentById(Integer apptId);
+	public Appointment getPatientsByApptDateRange(LocalDateTime startTime, LocalDateTime endTime);
+	public Schedule getScheduleByCoachWorkDay(Coach coach);
+	
 }

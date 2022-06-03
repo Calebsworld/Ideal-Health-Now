@@ -1,9 +1,13 @@
 package com.aca.IdealHealthNow.Controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import com.aca.IdealHealthNow.model.Appointment;
 import com.aca.IdealHealthNow.model.Coach;
 import com.aca.IdealHealthNow.model.Patient;
+import com.aca.IdealHealthNow.model.Schedule;
+import com.aca.IdealHealthNow.model.WorkDay;
 import com.aca.IdealHealthNow.service.SchedulingService;
 
 import jakarta.ws.rs.Consumes;
@@ -109,5 +113,57 @@ public class SchedulingAppController {
 	    public Patient deletePatient(@PathParam ("patientIdValue") Integer patientId) {
 	    	return service.deletePatient(patientId);
 	    }
+	    
+	    @Path("appointments/{apptIdValue}")
+	    @GET 
+	    public Appointment getAppointmentById(@PathParam ("apptIdValue") Integer apptId) {
+	    	return null;
+	    }
+	    
+	    @Path("/appointments")
+	    @POST
+	    public Appointment createNewAppointment(Appointment appt) {
+	    
+	    return null;
+	    }
+	    
+	    @Path ("/appointments")
+	    @PUT
+	    public Appointment updateAppointment(Appointment appt) {
+	    	
+	    	return null;
+	    }
+	    
+	    @Path("/appointments/{apptIdValue}") 
+	    @DELETE
+	    public Appointment deleteAppointmentById(@PathParam ("apptIdValue") Integer apptId) {
+	    	
+	    	return null;
+	    }
+	   
+	    @Path("/patients/report")
+	    @GET
+	    public List<Patient> getPatientsByApptDateRange(
+	    		@QueryParam ("startDateTimeValue") LocalDateTime startDateTime, 
+	    		@QueryParam ("endDateTimeValue") LocalDateTime endDateTime) {
+	    	
+	    	
+	    	return null;
+	    }
+	    
+	    @Path("/coach/schedule")
+	    @GET
+	    public Schedule getScheduleByCoachWorkDay(Coach coach) {
+	    
+	    return null;
+	    }
+	    
+	   
+	    
+	    
+	    
+	    
+	    
+	    
 	    
 }

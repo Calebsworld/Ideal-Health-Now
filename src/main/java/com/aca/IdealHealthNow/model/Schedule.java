@@ -7,10 +7,6 @@ import java.util.List;
 public class Schedule {
 
 	private List<Appointment> appointments = new ArrayList<>();
-
-	
-	
-	
 	
 	
 	public List<Appointment> getAppointments() {
