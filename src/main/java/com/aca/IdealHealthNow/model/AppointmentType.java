@@ -6,4 +6,7 @@ public enum AppointmentType {
 	NEW_START,
 	WEIGH_IN,
 	HEALTH_COACHING
+	
+	
+	
 }

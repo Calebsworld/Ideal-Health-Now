@@ -21,7 +21,7 @@ public class SchedulingService {
 		boolean doesExist = false;
 		List<Coach> coaches = getCoaches();
 		for (Coach coach : coaches) {
-			if (coach.getId().equals(coachId)) {
+			if (coach.getCoachId().equals(coachId)) {
 				doesExist = true;
 			}
 		}
@@ -72,7 +72,7 @@ public class SchedulingService {
 		boolean doesExist = false;
 		List<Patient> patients = getPatients();
 		for (Patient patient : patients) {
-			if (patient.getId().equals(patientId)) {
+			if (patient.getPatientId().equals(patientId)) {
 				doesExist = true;
 			}
 		}

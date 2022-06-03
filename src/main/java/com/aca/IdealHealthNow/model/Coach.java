@@ -5,16 +5,15 @@ import java.util.List;
 
 public class Coach extends Person {
 	
+	private Integer coachId;
 	private LocalDateTime UpdateDateTime;
 	private LocalDateTime CreateDateTime;
-	private WorkWeek workWeek;
 	
-	
-	public WorkWeek getWorkWeek() {
-		return workWeek;
+	public Integer getCoachId() {
+		return coachId;
 	}
-	public void setWorkWeek(WorkWeek workWeek) {
-		this.workWeek = workWeek;
+	public void setCoachId(Integer coachId) {
+		this.coachId = coachId;
 	}
 	
 	public LocalDateTime getUpdateDateTime() {

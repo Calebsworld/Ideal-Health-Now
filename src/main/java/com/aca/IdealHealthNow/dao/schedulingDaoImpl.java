@@ -18,16 +18,16 @@ import com.aca.IdealHealthNow.model.Schedule;
 public class schedulingDaoImpl implements ShedulingDao {
 
 	private static String SelectAllCoaches = 
-			"SELECT id, firstName, lastName, updateDateTime, createDateTime " +
+			"SELECT coachtId, firstName, lastName, updateDateTime, createDateTime " +
 			"FROM coaches " ;
 	
 	private static String SelectCoachById = 
-			"SELECT id, firstName, lastName, updateDateTime, createDateTime " +
+			"SELECT coachId, firstName, lastName, updateDateTime, createDateTime " +
 			"FROM coaches " +
-			"WHERE id = ? ";
+			"WHERE patientId = ? ";
 	
 	private static String SelectCoachByFullName = 
-			"SELECT id, firstName, lastName, updateDateTime, createDateTime " +
+			"SELECT coachId, firstName, lastName, updateDateTime, createDateTime " +
 			"FROM coaches " +
 			"WHERE firstName = ? AND lastName = ? ";
 	
@@ -37,33 +37,33 @@ public class schedulingDaoImpl implements ShedulingDao {
 					"(?, ?)";
 	
 	private static String selectNewCoachId = 
-			"SELECT LAST_INSERT_ID() AS id ";
+			"SELECT LAST_INSERT_ID() AS coachId ";
 	
 	private static String updateCoachById = 
 			"UPDATE coaches " +
 			"SET firstName = ?, lastName = ? " +
-			"WHERE id = ? ";
+			"WHERE coachId = ? ";
 	
 	private static String deleteCoachById = 
 			"DELETE FROM coaches " +
-			"WHERE id = ? ";
+			"WHERE coachId = ? ";
 	
 	private static String selectAllPatients = 
-			"SELECT id, firstName, lastName, emailAddress, phoneNumber, updateDateTime, CreateDateTime " + 
+			"SELECT patientId, firstName, lastName, emailAddress, phoneNumber, updateDateTime, CreateDateTime " + 
 			"FROM patients ";
 	
 	private static String selectPatientById = 
-			"SELECT id, firstName, lastName, emailAddress, phoneNumber, updateDateTime, CreateDateTime " + 
+			"SELECT patientId, firstName, lastName, emailAddress, phoneNumber, updateDateTime, CreateDateTime " + 
 					"FROM patients " + 
-					"WHERE id = ? ";
+					"WHERE patientId = ? ";
 	
 	private static String selectPatientByFullName = 
-			"SELECT id, firstName, lastName, emailAddress, phoneNumber, updateDateTime, CreateDateTime " + 
+			"SELECT patientId, firstName, lastName, emailAddress, phoneNumber, updateDateTime, CreateDateTime " + 
 					"FROM patients " + 
 					"WHERE firstName = ? AND lastName = ? ";
 	
 	private static String selectNewPatientId = 
-			"Select Last_Insert_ID() As id ";
+			"Select Last_Insert_ID() As patientId ";
 	
 	private static String createPatient = 
 			"INSERT into patients (firstName, lastName, emailAddress, phoneNumber) " +
@@ -73,11 +73,11 @@ public class schedulingDaoImpl implements ShedulingDao {
 	private static String updatePatientById =
 			"Update patients " +
 			"SET firstName = ?, lastName = ?, emailAddress = ?, phoneNumber = ? " +
-			"WHERE id = ? "; 
+			"WHERE patientId = ? "; 
 	
 	private static String deletePatientById =
 			"DELETE FROM patients " +
-			"WHERE id = ? ";
+			"WHERE patientId = ? ";
 	
 	@Override
 	public List<Coach> getCoaches() {
@@ -109,7 +109,7 @@ public class schedulingDaoImpl implements ShedulingDao {
 		List <Coach> coaches = new ArrayList<>();
 		while (result.next()) {
 			Coach coach = new Coach();
-			coach.setId(result.getInt("id"));
+			coach.setCoachId(result.getInt("coachId"));
 			coach.setFirstName(result.getString("firstName"));
 			coach.setLastName(result.getString("lastName"));
 			coach.setUpdateDateTime(result.getObject("updateDateTime", LocalDateTime.class));
@@ -183,7 +183,7 @@ public class schedulingDaoImpl implements ShedulingDao {
 			st = conn.createStatement();
 			rs = st.executeQuery(selectNewCoachId);
 			while (rs.next()) {
-				newCoachId = rs.getInt("id");
+				newCoachId = rs.getInt("coachId");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -213,7 +213,7 @@ public class schedulingDaoImpl implements ShedulingDao {
 			updateRowCount = ps.executeUpdate();
 			System.out.println("Rows updated: " + updateRowCount);
 			Integer newCoachId = getNewCoachId(conn);
-			coach.setId(newCoachId);
+			coach.setCoachId(newCoachId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -230,7 +230,7 @@ public class schedulingDaoImpl implements ShedulingDao {
 
 	@Override
 	public Coach updateCoach(Coach updateCoach) {
-		List <Coach> coaches = this.getCoachById(updateCoach.getId());
+		List <Coach> coaches = this.getCoachById(updateCoach.getCoachId());
 		if (coaches.size() > 0) {
 			int updateRowCount = 0;
 			PreparedStatement ps = null;
@@ -240,7 +240,7 @@ public class schedulingDaoImpl implements ShedulingDao {
 				ps = conn.prepareStatement(updateCoachById);
 				ps.setString(1, updateCoach.getFirstName());
 				ps.setString(2, updateCoach.getLastName());
-				ps.setInt(3, updateCoach.getId());
+				ps.setInt(3, updateCoach.getCoachId());
 				updateRowCount = ps.executeUpdate();
 				System.out.println("Rows updated: " + updateRowCount);
 			} catch (SQLException e) {
@@ -293,7 +293,7 @@ public class schedulingDaoImpl implements ShedulingDao {
 		
 		while (rs.next()) {
 			Patient patient = new Patient();
-			patient.setId(rs.getInt("id"));
+			patient.setPatientId(rs.getInt("patientId"));
 			patient.setFirstName(rs.getString("firstName"));
 			patient.setLastName(rs.getString("lastName"));
 			patient.setEmailAddress(rs.getString("emailAddress"));
@@ -369,7 +369,7 @@ public class schedulingDaoImpl implements ShedulingDao {
 			st = conn.createStatement();
 			rs = st.executeQuery(selectNewPatientId);
 			while (rs.next()) {
-				newPatientId = rs.getInt("id");
+				newPatientId = rs.getInt("patientId");
 			}
 		} catch (SQLException e) {
 			try {
@@ -428,7 +428,7 @@ public class schedulingDaoImpl implements ShedulingDao {
 			updateRowCount = ps.executeUpdate();
 			System.out.println("rows updated: " + updateRowCount);
 			Integer newPatientId = getNewPatientId(conn);
-			patient.setId(newPatientId);
+			patient.setPatientId(newPatientId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} try {
@@ -443,7 +443,7 @@ public class schedulingDaoImpl implements ShedulingDao {
 
 	@Override
 	public Patient updatePatient(Patient updatePatient) {
-		List<Patient> patients = this.getPatientsById(updatePatient.getId());
+		List<Patient> patients = this.getPatientsById(updatePatient.getPatientId());
 		if (patients.size() > 0) {
 			int updateRowCount = 0;
 			PreparedStatement ps = null;
@@ -454,7 +454,7 @@ public class schedulingDaoImpl implements ShedulingDao {
 				ps.setString(2, updatePatient.getLastName());
 				ps.setString(3, updatePatient.getEmailAddress());
 				ps.setString(4, updatePatient.getPhoneNumber());
-				ps.setInt(5, updatePatient.getId());
+				ps.setInt(5, updatePatient.getPatientId());
 				updateRowCount = ps.executeUpdate();
 				System.out.println("rows updated: " + updateRowCount);
 			} catch (SQLException e) {
@@ -501,21 +501,16 @@ public class schedulingDaoImpl implements ShedulingDao {
 		return patientToDelete;
 	}
 
-	@Override
-	public Schedule getScheduleByCoachWorkDay(Coach coach) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
-	public Appointment getAppointmentById(Integer apptId) {
+	public Appointment getAppointmentById(Integer bookingId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	
 	@Override
-	public Appointment getPatientsByApptDateRange(LocalDateTime startTime, LocalDateTime endTime) {
+	public Appointment getPatientsByApptDateRange(long startTime, long endTime) {
 		// TODO Auto-generated method stub
 		return null;
 	}

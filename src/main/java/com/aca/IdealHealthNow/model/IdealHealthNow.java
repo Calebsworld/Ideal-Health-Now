@@ -9,7 +9,6 @@ public class IdealHealthNow {
 	private List<Patient> patients;
 	private List<Product> products;
 	private String email;
-	private String password;
 	private String phoneNumber;
 	
 	
@@ -37,12 +36,7 @@ public class IdealHealthNow {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
+	
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}

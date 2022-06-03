@@ -4,18 +4,13 @@ import java.time.LocalDateTime;
 
 public class Patient extends Person{
 
+	private Integer patientId;
 	private String emailAddress;
 	private String phoneNumber;
 	private LocalDateTime updateDateTime;
 	private LocalDateTime createDateTime;
-	private Appointment appointment;
 	
-	public Appointment getAppointment() {
-		return appointment;
-	}
-	public void setAppointment(Appointment appointment) {
-		this.appointment = appointment;
-	}
+	
 	public String getEmailAddress() {
 		return emailAddress;
 	}
@@ -41,7 +36,12 @@ public class Patient extends Person{
 		this.createDateTime = createDateTime;
 	}
 	
-	
+	public Integer getPatientId() {
+		return patientId;
+	}
+	public void setPatientId(Integer patientId) {
+		this.patientId = patientId;
+	}
 	
 	
 	

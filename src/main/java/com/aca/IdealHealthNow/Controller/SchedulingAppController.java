@@ -1,13 +1,11 @@
 package com.aca.IdealHealthNow.Controller;
 
-import java.time.LocalDateTime;
+
 import java.util.List;
 
 import com.aca.IdealHealthNow.model.Appointment;
 import com.aca.IdealHealthNow.model.Coach;
 import com.aca.IdealHealthNow.model.Patient;
-import com.aca.IdealHealthNow.model.Schedule;
-import com.aca.IdealHealthNow.model.WorkDay;
 import com.aca.IdealHealthNow.service.SchedulingService;
 
 import jakarta.ws.rs.Consumes;
@@ -144,20 +142,14 @@ public class SchedulingAppController {
 	    @Path("/patients/report")
 	    @GET
 	    public List<Patient> getPatientsByApptDateRange(
-	    		@QueryParam ("startDateTimeValue") LocalDateTime startDateTime, 
-	    		@QueryParam ("endDateTimeValue") LocalDateTime endDateTime) {
+	    		@QueryParam ("startDateTimeValue") long startDateTime, 
+	    		@QueryParam ("endDateTimeValue") long endDateTime) {
 	    	
 	    	
 	    	return null;
 	    }
 	    
-	    @Path("/coach/schedule")
-	    @GET
-	    public Schedule getScheduleByCoachWorkDay(Coach coach) {
-	    
-	    return null;
-	    }
-	    
+	 
 	   
 	    
 	    
