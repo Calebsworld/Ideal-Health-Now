@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class Patient extends Person{
 
-	private Integer patientId;
+	private Integer Id;
 	private String emailAddress;
 	private String phoneNumber;
 	private LocalDateTime updateDateTime;
@@ -37,10 +37,10 @@ public class Patient extends Person{
 	}
 	
 	public Integer getPatientId() {
-		return patientId;
+		return Id;
 	}
 	public void setPatientId(Integer patientId) {
-		this.patientId = patientId;
+		this.Id = patientId;
 	}
 	
 	

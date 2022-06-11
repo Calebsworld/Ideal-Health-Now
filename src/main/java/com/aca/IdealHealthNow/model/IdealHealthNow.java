@@ -7,17 +7,11 @@ public class IdealHealthNow {
 
 	private List<Coach> coaches;
 	private List<Patient> patients;
-	private List<Product> products;
 	private String email;
 	private String phoneNumber;
 	
 	
-	public List<Product> getProducts() {
-		return products;
-	}
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
+	
 	public List<Coach> getCoaches() {
 		return coaches;
 	}

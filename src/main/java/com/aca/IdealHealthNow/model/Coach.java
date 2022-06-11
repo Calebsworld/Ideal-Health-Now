@@ -5,15 +5,15 @@ import java.util.List;
 
 public class Coach extends Person {
 	
-	private Integer coachId;
+	private Integer Id;
 	private LocalDateTime UpdateDateTime;
 	private LocalDateTime CreateDateTime;
 	
 	public Integer getCoachId() {
-		return coachId;
+		return Id;
 	}
 	public void setCoachId(Integer coachId) {
-		this.coachId = coachId;
+		this.Id = coachId;
 	}
 	
 	public LocalDateTime getUpdateDateTime() {

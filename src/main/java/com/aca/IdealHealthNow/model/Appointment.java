@@ -2,31 +2,31 @@ package com.aca.IdealHealthNow.model;
 
 public class Appointment {
 
-	private Integer apptId;
-	private Integer coachId;
+	private Integer Id;
+	private Coach coach;
 	private AppointmentType appointmentType;
-	private DayOfWeek dayOfWeek;
-	private long startTime;
-	private long endTime;
+	private DayOfWeek appointmentDayOfWeek;
+	private long appointmentStartTime;
+	private long appointmentEndTime;
 	private long duration;
 	private boolean isScheduled;
 	
 
-	public Appointment(Integer coachId, AppointmentType appointmentType, DayOfWeek dayOfWeek, long startTime) {
-		this.coachId = coachId;
+	public Appointment(Coach coach, AppointmentType appointmentType, DayOfWeek dayOfWeek, long startTime) {
+		this.coach = coach;
 		this.appointmentType = appointmentType;
-		this.dayOfWeek = dayOfWeek;
-		this.startTime = startTime;
+		this.appointmentDayOfWeek = dayOfWeek;
+		this.appointmentStartTime = startTime;
 		initializeDuration(appointmentType);
-		intializeEndTime(this.startTime, this.duration);
+		intializeEndTime(this.appointmentStartTime, this.duration);
 	}
 	
-	public Integer getCoachId() {
-		return coachId;
+	public Coach getCoach() {
+		return coach;
 	}
 
-	public void setCoachId(Integer coachId) {
-		this.coachId = coachId;
+	public void setCoach(Coach coach) {
+		this.coach = coach;
 	}
 
 	public AppointmentType getAppointmentType() {
@@ -43,30 +43,12 @@ public class Appointment {
 	public void setScheduled(boolean isScheduled) {
 		this.isScheduled = isScheduled;
 	}
-	public DayOfWeek getDayOfWeek() {
-		return dayOfWeek;
-	}
-	public void setDayOfWeek(DayOfWeek dayOfWeek) {
-		this.dayOfWeek = dayOfWeek;
-	}
 	
-	public long getStartTime() {
-		return startTime;
-	}
-	public void setStartTime(long startTime) {
-		this.startTime = startTime;
-	}
-	public long getEndTime() {
-		return endTime;
-	}
-	public void setEndTime(long endTime) {
-		this.endTime = endTime;
-	}
-	public Integer getApptId() {
-		return apptId;
+	public Integer getAppointmentId() {
+		return Id;
 	}
 	public void setApptId(Integer apptId) {
-		this.apptId = apptId;
+		this.Id = apptId;
 	}
 	public AppointmentType getApptName() {
 		return appointmentType;
@@ -79,6 +61,26 @@ public class Appointment {
 	}
 	public void setDuration(long duration) {
 		this.duration = duration;
+	}
+
+	public DayOfWeek getAppointmentDayOfWeek() {
+		return appointmentDayOfWeek;
+	}
+
+	public void setAppointmentDayOfWeek(DayOfWeek appointmentDayOfWeek) {
+		this.appointmentDayOfWeek = appointmentDayOfWeek;
+	}
+	
+	public long getAppointmentEndTime() {
+		return appointmentEndTime;
+	}
+
+	public void setAppointmentEndTime(long appointmentEndTime) {
+		this.appointmentEndTime = appointmentEndTime;
+	}
+	
+	private void intializeEndTime(long startTime, long duration) {
+		this.appointmentEndTime = startTime + duration;
 	}
 	
 	private void initializeDuration(AppointmentType appointmentType) {
@@ -100,8 +102,5 @@ public class Appointment {
 		}
 	}
 	
-	private void intializeEndTime(long startTime, long duration) {
-		this.endTime = startTime + duration;
-	}
 	
 }

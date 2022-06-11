@@ -2,35 +2,48 @@ package com.aca.IdealHealthNow.model;
 
 public class Booking {
 
-	private Integer bookingId;
-	private Integer appointmentId;
-	private Integer patientId;
+	private Integer Id;
+	private long bookingDateTime;
+	private Patient patient;
+	private Appointment appointment;
 	
-	public Booking(Integer appointmentId, Integer patientId) {
-		this.appointmentId = appointmentId;
-		this.patientId = patientId;
+	
+	public Booking(Patient patient, Appointment appointment) {
+		this.patient = patient;
+		this.appointment = appointment;
+	}
+	
+	public long getBookingDateTime() {
+		return bookingDateTime;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+	public Appointment getAppointment() {
+		return appointment;
+	}
+
+	public void setAppointment(Appointment appointment) {
+		this.appointment = appointment;
+	}
+
+	public void setBookingDateTime(long bookingDateTime) {
+		this.bookingDateTime = bookingDateTime;
 	}
 	
 	public Integer getBookingId() {
-		return bookingId;
+		return Id;
 	}
 	public void setBookingId(Integer bookingId) {
-		this.bookingId = bookingId;
-	}
-	public Integer getAppointment() {
-		return appointmentId;
-	}
-	public void setAppointment(Integer appointmentId) {
-		this.appointmentId = appointmentId;
+		this.Id = bookingId;
 	}
 	
-	public Integer getPatientId() {
-		return patientId;
-	}
-
-	public void setPatient(Integer patientId) {
-		this.patientId = patientId;
-	}
 	
 	
 }

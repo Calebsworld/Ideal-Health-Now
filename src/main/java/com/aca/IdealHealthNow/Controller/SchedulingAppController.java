@@ -34,8 +34,8 @@ public class SchedulingAppController {
 		@Path("coaches/{coachIdValue}")
 		@GET
 		@Consumes(MediaType.APPLICATION_JSON)
-		public List<Coach> getCoachById (@PathParam ("coachIdValue") Integer coachId) {
-			return service.getCoachById(coachId);
+		public List<Coach> getCoachById (@PathParam ("coachIdValue") Integer id) {
+			return service.getCoachById(id);
 		}
 		
 		@Path("/coaches/coach")
@@ -67,8 +67,8 @@ public class SchedulingAppController {
 		@Path("coaches/{coachIdValue}")
 	    @DELETE
 	    @Consumes(MediaType.APPLICATION_JSON)
-	    public Coach deleteCoach(@PathParam ("coachIdValue") Integer coachId) {
-	    	return service.deleteCoach(coachId);
+	    public Coach deleteCoach(@PathParam ("coachIdValue") Integer id) {
+	    	return service.deleteCoach(id);
 	    }
 	    
 	    @Path("/patients")
@@ -79,14 +79,14 @@ public class SchedulingAppController {
 	
 	    @Path("/patients/{patientIdValue}")
 	    @GET
-	    public List<Patient> getPatientsById(@PathParam ("patientIdValue") Integer patientId) {
-	    	return service.getPatientsById(patientId);
+	    public List<Patient> getPatientsById(@PathParam ("patientIdValue") Integer id) {
+	    	return service.getPatientsById(id);
 	    }
 	    
 	    @Path("/patients/patient")
 	    @GET
 	    @Consumes(MediaType.APPLICATION_JSON)
-	    public List<Patient> getPatientsByLastName(
+	    public List<Patient> getPatientsByFullName(
 	    		@QueryParam("patientFirstName") String patientFirstName,
 	    		@QueryParam("patientLastName") String patientLastName) {
 	    	return service.getPatientsByFullName(patientFirstName, patientLastName);
@@ -108,46 +108,35 @@ public class SchedulingAppController {
 	    
 	    @Path("/patients/{patientIdValue}")
 	    @DELETE
-	    public Patient deletePatient(@PathParam ("patientIdValue") Integer patientId) {
-	    	return service.deletePatient(patientId);
+	    public Patient deletePatient(@PathParam ("patientIdValue") Integer id) {
+	    	return service.deletePatient(id);
 	    }
 	    
 	    @Path("appointments/{apptIdValue}")
 	    @GET 
-	    public Appointment getAppointmentById(@PathParam ("apptIdValue") Integer apptId) {
-	    	return null;
+	    public Appointment getAppointmentById(@PathParam ("apptIdValue") Integer id) {
+	    	return service.getAppointmentById(id);
 	    }
 	    
 	    @Path("/appointments")
 	    @POST
-	    public Appointment createNewAppointment(Appointment appt) {
-	    
-	    return null;
+	    public Appointment createNewAppointment(Appointment appointment) {
+	    	return service.createNewAppointment(appointment);
 	    }
 	    
 	    @Path ("/appointments")
 	    @PUT
-	    public Appointment updateAppointment(Appointment appt) {
-	    	
-	    	return null;
+	    public Appointment updateAppointment(Appointment appointment) {
+	    	return service.updateAppointment(appointment);
 	    }
 	    
 	    @Path("/appointments/{apptIdValue}") 
 	    @DELETE
-	    public Appointment deleteAppointmentById(@PathParam ("apptIdValue") Integer apptId) {
-	    	
-	    	return null;
+	    public Appointment deleteAppointmentById(@PathParam ("apptIdValue") Integer id) {
+	    	return service.deleteAppointmentById(id);
 	    }
 	   
-	    @Path("/patients/report")
-	    @GET
-	    public List<Patient> getPatientsByApptDateRange(
-	    		@QueryParam ("startDateTimeValue") long startDateTime, 
-	    		@QueryParam ("endDateTimeValue") long endDateTime) {
-	    	
-	    	
-	    	return null;
-	    }
+	 
 	    
 	 
 	   

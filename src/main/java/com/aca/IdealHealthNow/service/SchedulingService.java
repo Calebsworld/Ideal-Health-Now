@@ -5,6 +5,7 @@ import java.util.List;
 import com.aca.IdealHealthNow.Exception.DataNotFoundException;
 import com.aca.IdealHealthNow.dao.ShedulingDao;
 import com.aca.IdealHealthNow.dao.schedulingDaoImpl;
+import com.aca.IdealHealthNow.model.Appointment;
 import com.aca.IdealHealthNow.model.Coach;
 import com.aca.IdealHealthNow.model.Patient;
 
@@ -14,23 +15,20 @@ public class SchedulingService {
 	
 	//coaches
 	
-	private void validateCoachId(Integer coachId) {
-		if (coachId == null || coachId <= 0) {
-			throw new DataNotFoundException("Not a valid coachId '" + coachId + "'- coachId must be > 0.");
+	private void validateCoachId(Integer id) {
+		if (id == null || id <= 0) {
+			throw new DataNotFoundException("Not a valid coachId '" + id + "'- coachId must be > 0.");
 		}  
 		boolean doesExist = false;
 		List<Coach> coaches = getCoaches();
 		for (Coach coach : coaches) {
-			if (coach.getCoachId().equals(coachId)) {
+			if (coach.getCoachId().equals(id)) {
 				doesExist = true;
 			}
 		}
-		
 		if (!doesExist) {
-			throw new DataNotFoundException("Not a valid coachId '" + coachId + "'- coachId does not exist");
+			throw new DataNotFoundException("Not a valid coachId '" + id + "'- coachId does not exist");
 		}
-		
-		
 	}
 	
 	public List<Coach> getCoaches() {
@@ -38,9 +36,9 @@ public class SchedulingService {
 	}
 
 	
-	public List<Coach> getCoachById(Integer coachId) {
-		validateCoachId(coachId);
-		return schedulingDao.getCoachById(coachId);
+	public List<Coach> getCoachById(Integer id) {
+		validateCoachId(id);
+		return schedulingDao.getCoachById(id);
 	}
 
 	public List<Coach> getCoachByFullName(String coachFirstName, String coachLastName) {
@@ -65,20 +63,20 @@ public class SchedulingService {
 	
 	// Patients
 	
-	private void validatePatientId(Integer patientId) {
-		if (patientId == null || patientId <= 0) {
-			throw new DataNotFoundException("Not a valid patientId '" + patientId + "'- patientId must be > 0.");
+	private void validatePatientId(Integer id) {
+		if (id == null || id <= 0) {
+			throw new DataNotFoundException("Not a valid patientId '" + id + "'- patientId must be > 0.");
 		}  
 		boolean doesExist = false;
 		List<Patient> patients = getPatients();
 		for (Patient patient : patients) {
-			if (patient.getPatientId().equals(patientId)) {
+			if (patient.getPatientId().equals(id)) {
 				doesExist = true;
 			}
 		}
 		
 		if (!doesExist) {
-			throw new DataNotFoundException("Not a valid patientId '" + patientId + "'- patientId does not exist");
+			throw new DataNotFoundException("Not a valid patientId '" + id + "'- patientId does not exist");
 		}
 		
 		
@@ -89,9 +87,9 @@ public class SchedulingService {
 	}
 
 	
-	public List<Patient> getPatientsById(Integer patientId) {
-		validatePatientId(patientId);
-		return schedulingDao.getPatientsById(patientId);
+	public List<Patient> getPatientsById(Integer id) {
+		validatePatientId(id);
+		return schedulingDao.getPatientsById(id);
 	}
 
 	
@@ -113,6 +111,27 @@ public class SchedulingService {
 		return schedulingDao.getPatientsByFullName(patientFirstName, patientLastName);
 	}
 
+	// Appointments
+	
+	public Appointment getAppointmentById(Integer id) {
+		return schedulingDao.getAppointmentById(id);
+	}
+
+	public Appointment createNewAppointment(Appointment appt) {
+		return schedulingDao.createNewAppointment(appt);
+	}
+
+	public Appointment updateAppointment(Appointment appt) {
+		return schedulingDao.updateAppointment(appt);
+	}
+
+	public Appointment deleteAppointmentById(Integer id) {
+		return schedulingDao.deleteAppointmentById(id);
+	}
+
+
+
+	
 	
 	
 	
