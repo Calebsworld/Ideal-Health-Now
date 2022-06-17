@@ -103,8 +103,10 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 			"FROM products " +
 			"WHERE productName = ? ";
 	
-	private static String selectProductByProductType = 
-			"";
+	private static String selectProductsByProductType = 
+			"Select id, productName, productType, category, description, updateDateTime, CreateDateTime " +
+					"FROM products " +
+					"WHERE productType = ? ";
 	
 	private static String selectProductsByCategory = 
 			"Select id, productName, productType, category, description, updateDateTime, CreateDateTime " +
@@ -658,6 +660,31 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 		}
 		return products;
 	}
+	
+	@Override
+	public List<Product> getProductsByProductType(String productType) {
+		List<Product> products = new ArrayList<>();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Connection conn = MariaDbUtil.getConnection();
+		try {
+			ps = conn.prepareStatement(selectProductsByProductType);
+			ps.setString(1, productType);
+			rs = ps.executeQuery();
+			products = makeProducts(rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return products;
+	}
 
 	@Override
 	public List<Product> getProductsByCategory(String category) {
@@ -767,6 +794,8 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 		
 		return productToDelete;
 	}
+
+
 
 	
 

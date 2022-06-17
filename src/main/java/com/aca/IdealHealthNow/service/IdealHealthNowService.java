@@ -157,6 +157,10 @@ public class IdealHealthNowService {
 		return idealHealthNowDao.removeProductById(id);
 	}
 
+	public List<Product> getProductsByProductType(String productType) {
+		return idealHealthNowDao.getProductsByProductType(productType);
+	}
+
 
 
 	

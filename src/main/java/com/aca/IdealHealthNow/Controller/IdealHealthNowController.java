@@ -169,13 +169,21 @@ public class IdealHealthNowController {
 			return service.getProductsByCategory(category);
 		}
 
+	    @Path ("/products/producttype/{productTypeValue}")
+	    @GET
+	    @Consumes(MediaType.APPLICATION_JSON)
+	    public List<Product> getProductsByProductType(@PathParam ("productTypeValue") String productType) {
+	    	return service.getProductsByProductType(productType);
+	    }
+	    
+	    
 		@Path("/products")
 		@POST
 		@Consumes(MediaType.APPLICATION_JSON)
 		public Product addProduct(Product product) {
 			return service.addProduct(product);
 		}
-
+		
 		@Path("/products/id/{productIdValue}")
 		@DELETE
 		@Consumes(MediaType.APPLICATION_JSON)
