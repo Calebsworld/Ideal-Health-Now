@@ -26,7 +26,7 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 	private static String SelectCoachById = 
 			"SELECT id, firstName, lastName, updateDateTime, createDateTime " +
 			"FROM coaches " +
-			"WHERE patientId = ? ";
+			"WHERE id = ? ";
 	
 	private static String SelectCoachByFullName = 
 			"SELECT id, firstName, lastName, updateDateTime, createDateTime " +
@@ -90,28 +90,29 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 	private static String deleteAppointment;
 	
 	private static String selectAllProducts = 
-			"SELECT id, productName, productType, category, description" + 
+			"SELECT id, productName, productType, category, description, updateDateTime, CreateDateTime " + 
 			"FROM products ";
 	
 	private static String selectProductById = 
-			"SELECT id, productName, productType, category, description" + 
-					"FROM products " +
-					"WHERE id = ?";
+			"SELECT id, productName, productType, category, description, updateDateTime, CreateDateTime " +
+			"FROM products " +
+			"WHERE id = ? ";
 	
 	private static String selectProductByProductName = 
-			"SELECT id, productName, productType, category, description" + 
-					"FROM products " +
-					"WHERE productName = ?";
+			"Select id, productName, productType, category, description, updateDateTime, CreateDateTime " +
+			"FROM products " +
+			"WHERE productName = ? ";
 	
 	private static String selectProductByProductType = 
-			"SELECT id, productName, productType, category, description" + 
-					"FROM products " +
-					"WHERE productType = ?";
+			"";
 	
 	private static String selectProductsByCategory = 
-			"SELECT id, productName, productType, category, description" + 
-					"FROM products " +
-					"WHERE category = ?";
+			"Select id, productName, productType, category, description, updateDateTime, CreateDateTime " +
+			"From products " +
+			"WHERE category = ? ";
+	
+	private static String selectNewProductId = 
+			"SELECT LAST_INSERT_ID() AS productId ";
 	
 	private static String addProduct = 
 			"INSERT into products(productName, productType, category, description) " +
@@ -601,40 +602,170 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 			product.setProductType(ProductType.convertStringToProductType(productTypeValue));
 			product.setCategory(rs.getString("category"));
 			product.setDescription(rs.getString("description"));
+			product.setUpdateDateTime(rs.getObject("updateDateTime", LocalDateTime.class));
+			product.setCreateDateTime(rs.getObject("createDateTime", LocalDateTime.class));
+			products.add(product);
 		}
 		return products;
 	}
 	
-	
-	
 	@Override
-	public Product getProductById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Product> getProductById(Integer id) {
+		List<Product> products = new ArrayList<>();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Connection conn = MariaDbUtil.getConnection();
+		try {
+			ps = conn.prepareStatement(selectProductById);
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			products = makeProducts(rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return products;
 	}
 
 	@Override
-	public Product getProductByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Product> getProductByName(String name) {
+		List<Product> products = new ArrayList<>();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Connection conn = MariaDbUtil.getConnection();
+		try {
+			ps = conn.prepareStatement(selectProductByProductName);
+			ps.setString(1, name);
+			rs = ps.executeQuery();
+			products = makeProducts(rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return products;
 	}
 
 	@Override
 	public List<Product> getProductsByCategory(String category) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Product> products = new ArrayList<>();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Connection conn = MariaDbUtil.getConnection();
+		try {
+			ps = conn.prepareStatement(selectProductsByCategory);
+			ps.setString(1, category);
+			rs = ps.executeQuery();
+			products = makeProducts(rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return products;
 	}
 
+	private Integer getNewProductId(Connection conn) {
+		ResultSet rs = null;
+		Statement st = null;
+		Integer newProductId = null;
+		
+		try {
+			st = conn.createStatement();
+			rs = st.executeQuery(selectNewProductId);
+			while (rs.next()) {
+				newProductId = rs.getInt("id");
+			}
+		} catch (SQLException e) {
+			try {
+				rs.close();
+				st.close();
+				conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+
+		return newProductId;
+	}
+	
+	
 	@Override
 	public Product addProduct(Product product) {
-		// TODO Auto-generated method stub
-		return null;
+		int updateRowCount = 0;
+		PreparedStatement ps = null;
+		
+		Connection conn = MariaDbUtil.getConnection();
+		try {
+			ps = conn.prepareStatement(addProduct);
+			ps.setString(1, product.getName());
+			ps.setString(2, product.getProductType().toString());
+			ps.setString(3, product.getCategory());
+			ps.setString(4, product.getDescription());
+			updateRowCount = ps.executeUpdate();
+			Integer newProductId = getNewProductId(conn);
+			product.setId(newProductId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return product;
 	}
 
 	@Override
 	public Product removeProductById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Product> products = this.getProductById(id);
+		Product productToDelete = null;
+		if (products.size() > 0) {
+			productToDelete = products.get(0);
+		}
+		int updateRowCount = 0;
+		PreparedStatement ps = null;
+		Connection conn = MariaDbUtil.getConnection(); 
+		try {
+			ps = conn.prepareStatement(removeProductById);
+			ps.setInt(1, id);
+			updateRowCount = ps.executeUpdate();
+			System.out.println("rows deleted " + updateRowCount);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return productToDelete;
 	}
 
 	

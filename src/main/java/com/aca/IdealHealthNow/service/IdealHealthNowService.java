@@ -8,10 +8,11 @@ import com.aca.IdealHealthNow.dao.IdealHealthNowDaoImpl;
 import com.aca.IdealHealthNow.model.Appointment;
 import com.aca.IdealHealthNow.model.Coach;
 import com.aca.IdealHealthNow.model.Patient;
+import com.aca.IdealHealthNow.model.Product;
 
 public class IdealHealthNowService {
 
-	IdealHealthNowDao schedulingDao = new IdealHealthNowDaoImpl();
+	IdealHealthNowDao idealHealthNowDao = new IdealHealthNowDaoImpl();
 	
 	//coaches
 	
@@ -32,32 +33,32 @@ public class IdealHealthNowService {
 	}
 	
 	public List<Coach> getCoaches() {
-		return schedulingDao.getCoaches();
+		return idealHealthNowDao.getCoaches();
 	}
 
 	
 	public List<Coach> getCoachById(Integer id) {
 		validateCoachId(id);
-		return schedulingDao.getCoachById(id);
+		return idealHealthNowDao.getCoachById(id);
 	}
 
 	public List<Coach> getCoachByFullName(String coachFirstName, String coachLastName) {
-		return schedulingDao.getCoachByFullName(coachFirstName, coachLastName);
+		return idealHealthNowDao.getCoachByFullName(coachFirstName, coachLastName);
 	}
 	
 	public Coach createCoach(Coach coach) {
-		return schedulingDao.createCoach(coach);
+		return idealHealthNowDao.createCoach(coach);
 	 
 	}
 
 	
 	public Coach updateCoach(Coach updateCoach) {
-		return schedulingDao.updateCoach(updateCoach);
+		return idealHealthNowDao.updateCoach(updateCoach);
 	}
 
 	
 	public Coach deleteCoach(Integer coachId) {
-		return schedulingDao.deleteCoach(coachId);
+		return idealHealthNowDao.deleteCoach(coachId);
 	}
 
 	
@@ -83,50 +84,77 @@ public class IdealHealthNowService {
 	}
 	
 	public List<Patient> getPatients() {
-		return schedulingDao.getPatients();
+		return idealHealthNowDao.getPatients();
 	}
 
 	
 	public List<Patient> getPatientsById(Integer id) {
 		validatePatientId(id);
-		return schedulingDao.getPatientsById(id);
+		return idealHealthNowDao.getPatientsById(id);
 	}
 
 	
 	public Patient createPatient(Patient patient) {
-		return schedulingDao.createPatient(patient);
+		return idealHealthNowDao.createPatient(patient);
 	}
 
 	
 	public Patient updatePatient(Patient updatePatient) {
-		return schedulingDao.updatePatient(updatePatient);
+		return idealHealthNowDao.updatePatient(updatePatient);
 	}
 
 
 	public Patient deletePatient(Integer patientId) {
-		return schedulingDao.deletePatient(patientId);
+		return idealHealthNowDao.deletePatient(patientId);
 	}
 
 	public List<Patient> getPatientsByFullName(String patientFirstName, String patientLastName) {
-		return schedulingDao.getPatientsByFullName(patientFirstName, patientLastName);
+		return idealHealthNowDao.getPatientsByFullName(patientFirstName, patientLastName);
 	}
 
 	// Appointments
 	
 	public Appointment getAppointmentById(Integer id) {
-		return schedulingDao.getAppointmentById(id);
+		return idealHealthNowDao.getAppointmentById(id);
 	}
 
 	public Appointment createAppointment(Appointment appt) {
-		return schedulingDao.createAppointment(appt);
+		return idealHealthNowDao.createAppointment(appt);
 	}
 
 	public Appointment updateAppointment(Appointment appt) {
-		return schedulingDao.updateAppointment(appt);
+		return idealHealthNowDao.updateAppointment(appt);
 	}
 
 	public Appointment deleteAppointmentById(Integer id) {
-		return schedulingDao.deleteAppointmentById(id);
+		return idealHealthNowDao.deleteAppointmentById(id);
+	}
+
+	public List<Product> getAllProducts() {
+		return idealHealthNowDao.getAllProducts();
+	}
+	
+	public List<Product> getProductById(Integer id) {
+		return idealHealthNowDao.getProductById(id);
+	}
+
+	public List<Product> getProductByName(String name) {
+		return idealHealthNowDao.getProductByName(name);
+	}
+
+	
+	public List<Product> getProductsByCategory(String category) {
+		return idealHealthNowDao.getProductsByCategory(category);
+	}
+
+	
+	public Product addProduct(Product product) {
+		return idealHealthNowDao.addProduct(product);
+	}
+
+	
+	public Product removeProductById(Integer id) {
+		return idealHealthNowDao.removeProductById(id);
 	}
 
 

@@ -2,7 +2,7 @@ package com.aca.IdealHealthNow.model;
 
 
 public enum ProductType {
-	FOOD, SUPPLEMENT;
+	Food, Supplement;
 	
 	public static ProductType convertStringToProductType (String value) {
 		ProductType myProductType = null;

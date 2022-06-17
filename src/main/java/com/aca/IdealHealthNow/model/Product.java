@@ -1,5 +1,7 @@
 package com.aca.IdealHealthNow.model;
 
+import java.time.LocalDateTime;
+
 public class Product {
 
 	private Integer id;
@@ -7,7 +9,33 @@ public class Product {
 	private ProductType productType;
 	private String category; 
 	private String description;
+	private LocalDateTime UpdateDateTime;
+	private LocalDateTime CreateDateTime;
 	
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public LocalDateTime getUpdateDateTime() {
+		return UpdateDateTime;
+	}
+
+	public void setUpdateDateTime(LocalDateTime updateDateTime) {
+		UpdateDateTime = updateDateTime;
+	}
+
+	public LocalDateTime getCreateDateTime() {
+		return CreateDateTime;
+	}
+
+	public void setCreateDateTime(LocalDateTime createDateTime) {
+		CreateDateTime = createDateTime;
+	}
+
 	public Product() {
 		
 	}

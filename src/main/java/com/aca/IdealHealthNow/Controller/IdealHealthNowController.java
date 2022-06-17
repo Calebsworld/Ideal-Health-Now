@@ -6,6 +6,7 @@ import java.util.List;
 import com.aca.IdealHealthNow.model.Appointment;
 import com.aca.IdealHealthNow.model.Coach;
 import com.aca.IdealHealthNow.model.Patient;
+import com.aca.IdealHealthNow.model.Product;
 import com.aca.IdealHealthNow.service.IdealHealthNowService;
 
 import jakarta.ws.rs.Consumes;
@@ -108,35 +109,80 @@ public class IdealHealthNowController {
 	    
 	    @Path("/patients/{patientIdValue}")
 	    @DELETE
+	    @Consumes(MediaType.APPLICATION_JSON)
 	    public Patient deletePatient(@PathParam ("patientIdValue") Integer id) {
 	    	return service.deletePatient(id);
 	    }
 	    
 	    @Path("appointments/{apptIdValue}")
 	    @GET 
+	    @Consumes(MediaType.APPLICATION_JSON)
 	    public Appointment getAppointmentById(@PathParam ("apptIdValue") Integer id) {
 	    	return service.getAppointmentById(id);
 	    }
 	    
 	    @Path("/appointments")
 	    @POST
+	    @Consumes(MediaType.APPLICATION_JSON)
 	    public Appointment createAppointment(Appointment appointment) {
 	    	return service.createAppointment(appointment);
 	    }
 	    
 	    @Path ("/appointments")
 	    @PUT
+	    @Consumes(MediaType.APPLICATION_JSON)
 	    public Appointment updateAppointment(Appointment appointment) {
 	    	return service.updateAppointment(appointment);
 	    }
 	    
 	    @Path("/appointments/{apptIdValue}") 
 	    @DELETE
+	    @Consumes(MediaType.APPLICATION_JSON)
 	    public Appointment deleteAppointmentById(@PathParam ("apptIdValue") Integer id) {
 	    	return service.deleteAppointmentById(id);
 	    }
 	   
-	 
+	    @Path("/products")
+	    @GET
+	    public List<Product> getAllProducts() {
+	    	return service.getAllProducts();
+	    }
+		
+	    @Path("/products/id/{productIdValue}")
+	    @GET
+	    @Consumes(MediaType.APPLICATION_JSON)
+	    public List<Product> getProductById(@PathParam ("productIdValue") Integer id) {
+			return service.getProductById(id);
+		}
+	    
+	    @Path("/products/productname")
+	    @GET
+	    @Consumes(MediaType.APPLICATION_JSON)
+		public List<Product> getProductByName(@QueryParam ("productNameValue") String name) {
+			return service.getProductByName(name);
+		}
+
+	    @Path("/products/category")
+		@GET
+		@Consumes(MediaType.APPLICATION_JSON)
+		public List<Product> getProductsByCategory(@QueryParam ("categoryValue") String category) {
+			return service.getProductsByCategory(category);
+		}
+
+		@Path("/products")
+		@POST
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Product addProduct(Product product) {
+			return service.addProduct(product);
+		}
+
+		@Path("/products/id/{productIdValue}")
+		@DELETE
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Product removeProductById(@PathParam ("productIdValue") Integer id) {
+			return service.removeProductById(id);
+		}
+	    
 	    
 	 
 	   
