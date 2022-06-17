@@ -3,15 +3,15 @@ package com.aca.IdealHealthNow.service;
 import java.util.List;
 
 import com.aca.IdealHealthNow.Exception.DataNotFoundException;
-import com.aca.IdealHealthNow.dao.ShedulingDao;
-import com.aca.IdealHealthNow.dao.schedulingDaoImpl;
+import com.aca.IdealHealthNow.dao.IdealHealthNowDao;
+import com.aca.IdealHealthNow.dao.IdealHealthNowDaoImpl;
 import com.aca.IdealHealthNow.model.Appointment;
 import com.aca.IdealHealthNow.model.Coach;
 import com.aca.IdealHealthNow.model.Patient;
 
-public class SchedulingService {
+public class IdealHealthNowService {
 
-	ShedulingDao schedulingDao = new schedulingDaoImpl();
+	IdealHealthNowDao schedulingDao = new IdealHealthNowDaoImpl();
 	
 	//coaches
 	
@@ -117,8 +117,8 @@ public class SchedulingService {
 		return schedulingDao.getAppointmentById(id);
 	}
 
-	public Appointment createNewAppointment(Appointment appt) {
-		return schedulingDao.createNewAppointment(appt);
+	public Appointment createAppointment(Appointment appt) {
+		return schedulingDao.createAppointment(appt);
 	}
 
 	public Appointment updateAppointment(Appointment appt) {

@@ -6,7 +6,7 @@ import java.util.List;
 import com.aca.IdealHealthNow.model.Appointment;
 import com.aca.IdealHealthNow.model.Coach;
 import com.aca.IdealHealthNow.model.Patient;
-import com.aca.IdealHealthNow.service.SchedulingService;
+import com.aca.IdealHealthNow.service.IdealHealthNowService;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -21,9 +21,9 @@ import jakarta.ws.rs.core.MediaType;
 
 @Path("/Home")
 @Produces(MediaType.APPLICATION_JSON)
-public class SchedulingAppController {
+public class IdealHealthNowController {
 
-	private SchedulingService service = new SchedulingService();
+	private IdealHealthNowService service = new IdealHealthNowService();
 	
 		@Path("/coaches")
 	    @GET
@@ -120,8 +120,8 @@ public class SchedulingAppController {
 	    
 	    @Path("/appointments")
 	    @POST
-	    public Appointment createNewAppointment(Appointment appointment) {
-	    	return service.createNewAppointment(appointment);
+	    public Appointment createAppointment(Appointment appointment) {
+	    	return service.createAppointment(appointment);
 	    }
 	    
 	    @Path ("/appointments")

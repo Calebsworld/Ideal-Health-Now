@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.aca</groupId>
-    <artifactId>IdealHealthNow</artifactId>
+    <artifactId>idealhealthnow</artifactId>
     <packaging>war</packaging>
     <version>1.0</version>
-    <name>IdealHealthNow</name>
+    <name>idealhealthnow</name>
 
     <build>
-        <finalName>IdealHealthNow</finalName>
+        <finalName>idealhealthnow</finalName>
         <plugins>
         <plugin>
 			    <groupId>org.apache.maven.plugins</groupId>

@@ -12,10 +12,12 @@ import java.util.List;
 import com.aca.IdealHealthNow.model.Appointment;
 import com.aca.IdealHealthNow.model.Coach;
 import com.aca.IdealHealthNow.model.Patient;
+import com.aca.IdealHealthNow.model.Product;
+import com.aca.IdealHealthNow.model.ProductType;
 import com.aca.IdealHealthNow.model.Schedule;
 
 
-public class schedulingDaoImpl implements ShedulingDao {
+public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 
 	private static String SelectAllCoaches = 
 			"SELECT id, firstName, lastName, updateDateTime, createDateTime " +
@@ -77,6 +79,47 @@ public class schedulingDaoImpl implements ShedulingDao {
 	
 	private static String deletePatientById =
 			"DELETE FROM patients " +
+			"WHERE id = ? ";
+	
+	private static String getAppointmentById;
+	
+	private static String createAppointment;
+	
+	private static String updateAppointment;
+	
+	private static String deleteAppointment;
+	
+	private static String selectAllProducts = 
+			"SELECT id, productName, productType, category, description" + 
+			"FROM products ";
+	
+	private static String selectProductById = 
+			"SELECT id, productName, productType, category, description" + 
+					"FROM products " +
+					"WHERE id = ?";
+	
+	private static String selectProductByProductName = 
+			"SELECT id, productName, productType, category, description" + 
+					"FROM products " +
+					"WHERE productName = ?";
+	
+	private static String selectProductByProductType = 
+			"SELECT id, productName, productType, category, description" + 
+					"FROM products " +
+					"WHERE productType = ?";
+	
+	private static String selectProductsByCategory = 
+			"SELECT id, productName, productType, category, description" + 
+					"FROM products " +
+					"WHERE category = ?";
+	
+	private static String addProduct = 
+			"INSERT into products(productName, productType, category, description) " +
+			"VALUES " +
+			"(?, ?, ?, ?) ";
+	
+	private static String removeProductById = 
+			"DELETE from products " +
 			"WHERE id = ? ";
 	
 	@Override
@@ -467,7 +510,6 @@ public class schedulingDaoImpl implements ShedulingDao {
 				}
 			}
 		}
-
 		return updatePatient;
 	}
 
@@ -508,7 +550,7 @@ public class schedulingDaoImpl implements ShedulingDao {
 	}
 
 	@Override
-	public Appointment createNewAppointment(Appointment appointment) {
+	public Appointment createAppointment(Appointment appointment) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -521,6 +563,76 @@ public class schedulingDaoImpl implements ShedulingDao {
 
 	@Override
 	public Appointment deleteAppointmentById(Integer Id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Product> getAllProducts() {
+		List <Product> products = new ArrayList<>();		
+		Statement st = null;
+		ResultSet rs = null;
+		Connection conn = MariaDbUtil.getConnection();
+		try {
+			st = conn.createStatement();
+			rs = st.executeQuery(selectAllProducts);
+			products = makeProducts(rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				st.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}	
+		return products;
+	}
+
+	private List<Product> makeProducts(ResultSet rs) throws SQLException {
+		List<Product> products = new ArrayList<>();
+		while (rs.next()) {
+			Product product = new Product();
+			product.setId(rs.getInt("id"));
+			product.setName(rs.getString("productName"));
+			String productTypeValue = rs.getString("productType");
+			product.setProductType(ProductType.convertStringToProductType(productTypeValue));
+			product.setCategory(rs.getString("category"));
+			product.setDescription(rs.getString("description"));
+		}
+		return products;
+	}
+	
+	
+	
+	@Override
+	public Product getProductById(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Product getProductByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Product> getProductsByCategory(String category) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Product addProduct(Product product) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Product removeProductById(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
