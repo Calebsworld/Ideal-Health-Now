@@ -3,6 +3,7 @@ package com.aca.IdealHealthNow.Controller;
 
 import java.util.List;
 
+
 import com.aca.IdealHealthNow.model.Appointment;
 import com.aca.IdealHealthNow.model.Coach;
 import com.aca.IdealHealthNow.model.Patient;
@@ -20,7 +21,8 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/Home")
+
+@Path("/home")
 @Produces(MediaType.APPLICATION_JSON)
 public class IdealHealthNowController {
 

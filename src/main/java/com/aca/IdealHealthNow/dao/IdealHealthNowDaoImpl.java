@@ -14,7 +14,7 @@ import com.aca.IdealHealthNow.model.Coach;
 import com.aca.IdealHealthNow.model.Patient;
 import com.aca.IdealHealthNow.model.Product;
 import com.aca.IdealHealthNow.model.ProductType;
-import com.aca.IdealHealthNow.model.Schedule;
+
 
 
 public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
@@ -720,7 +720,7 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 			st = conn.createStatement();
 			rs = st.executeQuery(selectNewProductId);
 			while (rs.next()) {
-				newProductId = rs.getInt("id");
+				newProductId = rs.getInt("productId");
 			}
 		} catch (SQLException e) {
 			try {
