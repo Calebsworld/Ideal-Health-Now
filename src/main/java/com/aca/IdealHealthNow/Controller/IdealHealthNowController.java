@@ -115,34 +115,6 @@ public class IdealHealthNowController {
 	    public Patient deletePatient(@PathParam ("patientIdValue") Integer id) {
 	    	return service.deletePatient(id);
 	    }
-	    
-	    @Path("appointments/{apptIdValue}")
-	    @GET 
-	    @Consumes(MediaType.APPLICATION_JSON)
-	    public Appointment getAppointmentById(@PathParam ("apptIdValue") Integer id) {
-	    	return service.getAppointmentById(id);
-	    }
-	    
-	    @Path("/appointments")
-	    @POST
-	    @Consumes(MediaType.APPLICATION_JSON)
-	    public Appointment createAppointment(Appointment appointment) {
-	    	return service.createAppointment(appointment);
-	    }
-	    
-	    @Path ("/appointments")
-	    @PUT
-	    @Consumes(MediaType.APPLICATION_JSON)
-	    public Appointment updateAppointment(Appointment appointment) {
-	    	return service.updateAppointment(appointment);
-	    }
-	    
-	    @Path("/appointments/{apptIdValue}") 
-	    @DELETE
-	    @Consumes(MediaType.APPLICATION_JSON)
-	    public Appointment deleteAppointmentById(@PathParam ("apptIdValue") Integer id) {
-	    	return service.deleteAppointmentById(id);
-	    }
 	   
 	    @Path("/products")
 	    @GET
@@ -185,6 +157,15 @@ public class IdealHealthNowController {
 		public Product addProduct(Product product) {
 			return service.addProduct(product);
 		}
+		
+		@Path("/products")
+		@PUT
+		@Consumes(MediaType.APPLICATION_JSON)
+		public Product updateProduct(Product product) {
+			return service.updateProduct(product);
+		}
+		
+		
 		
 		@Path("/products/id/{productIdValue}")
 		@DELETE

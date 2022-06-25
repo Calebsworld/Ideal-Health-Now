@@ -11,40 +11,9 @@ public class Product {
 	private String description;
 	private LocalDateTime UpdateDateTime;
 	private LocalDateTime CreateDateTime;
-	
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-
-	public LocalDateTime getUpdateDateTime() {
-		return UpdateDateTime;
-	}
-
-	public void setUpdateDateTime(LocalDateTime updateDateTime) {
-		UpdateDateTime = updateDateTime;
-	}
-
-	public LocalDateTime getCreateDateTime() {
-		return CreateDateTime;
-	}
-
-	public void setCreateDateTime(LocalDateTime createDateTime) {
-		CreateDateTime = createDateTime;
-	}
 
 	public Product() {
-		
-	}
-	
-	public Product(String productName, ProductType productType, String category, String description) {
-		this.productName = productName;
-		this.productType = productType;
-		this.category = category;
-		this.description = description;
+
 	}
 	
 	public Integer getId() {
@@ -53,10 +22,10 @@ public class Product {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getName() {
+	public String getProductName() {
 		return productName;
 	}
-	public void setName(String productName) {
+	public void setProductName(String productName) {
 		this.productName = productName;
 	}
 	public ProductType getProductType() {
@@ -77,6 +46,24 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public LocalDateTime getUpdateDateTime() {
+		return UpdateDateTime;
+	}
+
+	public void setUpdateDateTime(LocalDateTime updateDateTime) {
+		UpdateDateTime = updateDateTime;
+	}
+
+	public LocalDateTime getCreateDateTime() {
+		return CreateDateTime;
+	}
+
+	public void setCreateDateTime(LocalDateTime createDateTime) {
+		CreateDateTime = createDateTime;
+	}
+	
+	
 	
 	
 }

@@ -4,7 +4,7 @@
 */
 
 let myApp = angular.module('app');
-myApp.controller('productsController', function($scope, $http, $location) {
+myApp.controller('adminController', function($scope, $http, $location) {
 	$scope.getAllProducts = function() {
 		$http.get('/idealhealthnow/webapi/home/products')
 		.then(function(response) {
@@ -17,9 +17,13 @@ myApp.controller('productsController', function($scope, $http, $location) {
 	
 	
 	$scope.goToUpdateView = function(productId) {
-		$location.path('/update/ ' + productId)
+		alert(productId);
+		$location.path('/update/' + productId);
 	}
 
+	$scope.goToCreateView = function() {
+		$location.path('/create');
+	}
 	
 	
 });

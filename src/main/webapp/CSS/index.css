@@ -1,0 +1,16 @@
+#navbar {
+	background-color: #F05A0F;
+}
+#coachesBanner {
+	background-image : url('../Images/ideal-health-coach-benefits.webp');
+	background-size: cover;
+	height: 140vh;
+}
+
+#productsBanner {
+	background-color : #012849;
+}
+
+#mainBanner {
+	background-color : #012849;
+}

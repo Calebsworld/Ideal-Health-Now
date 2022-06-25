@@ -1,12 +1,12 @@
-(function() {
+(function(){
 	
-	var app = angular.module('app');
-	app.controller = ('updateController', function($scope, $http, $routeParams, $location) {
+	var myApp = angular.module('app');
+	myApp.controller('updateController', function($scope, $http, $location, $routeParams){
 		
-		$scope.productTypes = ['chips', 'drinks', 'protein bars'];
+		$scope.productTypes = ['Food', 'Supplement'];
 		
 		$scope.getProductsById = function() {
-			$http.get('/idealhealthnow/webapi/home/products/id/ ' + $routeParams.productId)
+			$http.get('/idealhealthnow/webapi/home/products/id/' + $routeParams.productId)			
 			.then(function(response) {
 				var products = response.data;
 				if (products.length == 1) {
@@ -20,10 +20,10 @@
 			});
 		}
 		
-		getProductsById();
+		$scope.getProductsById();
 		
 		$scope.updateProduct = function() {
-			$http.put('idealhealthnow/webapi/home/products', $scope.product)
+			$http.put('/idealhealthnow/webapi/home/products', $scope.product)
 			.then(function(response) {
 				$scope.updateStatus = 'update successful';	
 			}, function(response) {
@@ -33,7 +33,7 @@
 		}
 		
 		$scope.deleteProduct = function() {
-			$http.delete('idealhealthnow/webapi/home/products/id/' + $scope.product.id)
+			$http.delete('/idealhealthnow/webapi/home/products/id/' + $scope.product.id)
 			.then(function(response) {
 				$scope.updateStatus = 'delete successful';	
 				$scope.disableUpdate = true;
@@ -44,9 +44,11 @@
 		}
 		
 		$scope.goToProductsView = function() {
-			$location.path('/products');
+			$location.path('/admin');
 		} 
 		
-	});
+		
+		
+	})
 	
 })();

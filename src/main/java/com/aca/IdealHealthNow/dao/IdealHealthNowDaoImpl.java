@@ -73,7 +73,7 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 			"(?, ?, ?, ?) ";
 			
 	private static String updatePatientById =
-			"Update patients " +
+			"UPDATE patients " +
 			"SET firstName = ?, lastName = ?, emailAddress = ?, phoneNumber = ? " +
 			"WHERE id = ? "; 
 	
@@ -81,13 +81,9 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 			"DELETE FROM patients " +
 			"WHERE id = ? ";
 	
-	private static String getAppointmentById;
 	
-	private static String createAppointment;
 	
-	private static String updateAppointment;
 	
-	private static String deleteAppointment;
 	
 	private static String selectAllProducts = 
 			"SELECT id, productName, productType, category, description, updateDateTime, CreateDateTime " + 
@@ -120,6 +116,11 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 			"INSERT into products(productName, productType, category, description) " +
 			"VALUES " +
 			"(?, ?, ?, ?) ";
+	
+	private static String updateProductById = 
+			"UPDATE products " +
+			"SET productName = ?, productType = ?, category = ?, description = ? " +
+			"WHERE id = ? ";
 	
 	private static String removeProductById = 
 			"DELETE from products " +
@@ -544,32 +545,7 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 		
 		return patientToDelete;
 	}
-
-
-	@Override
-	public Appointment getAppointmentById(Integer Id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Appointment createAppointment(Appointment appointment) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Appointment updateAppointment(Appointment updateAppointment) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Appointment deleteAppointmentById(Integer Id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public List<Product> getAllProducts() {
 		List <Product> products = new ArrayList<>();		
@@ -599,7 +575,7 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 		while (rs.next()) {
 			Product product = new Product();
 			product.setId(rs.getInt("id"));
-			product.setName(rs.getString("productName"));
+			product.setProductName(rs.getString("productName"));
 			String productTypeValue = rs.getString("productType");
 			product.setProductType(ProductType.convertStringToProductType(productTypeValue));
 			product.setCategory(rs.getString("category"));
@@ -637,14 +613,14 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 	}
 
 	@Override
-	public List<Product> getProductByName(String name) {
+	public List<Product> getProductByName(String productName) {
 		List<Product> products = new ArrayList<>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Connection conn = MariaDbUtil.getConnection();
 		try {
 			ps = conn.prepareStatement(selectProductByProductName);
-			ps.setString(1, name);
+			ps.setString(1, productName);
 			rs = ps.executeQuery();
 			products = makeProducts(rs);
 		} catch (SQLException e) {
@@ -745,7 +721,7 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 		Connection conn = MariaDbUtil.getConnection();
 		try {
 			ps = conn.prepareStatement(addProduct);
-			ps.setString(1, product.getName());
+			ps.setString(1, product.getProductName());
 			ps.setString(2, product.getProductType().toString());
 			ps.setString(3, product.getCategory());
 			ps.setString(4, product.getDescription());
@@ -765,6 +741,37 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 
 		return product;
 	}
+	
+	@Override
+	public Product updateProduct(Product product) {
+			List<Product> products = this.getProductById(product.getId());
+			if (products.size() > 0) {
+				int updateRowCount = 0;
+				PreparedStatement ps = null;
+				Connection conn = MariaDbUtil.getConnection();
+				try {
+					ps = conn.prepareStatement(updateProductById);
+					ps.setString(1, product.getProductName());
+					ps.setString(2, product.getProductType().toString());
+					ps.setString(3, product.getCategory());
+					ps.setString(4, product.getDescription());
+					ps.setInt(5, product.getId());
+					updateRowCount = ps.executeUpdate();
+					System.out.println("rows updated: " + updateRowCount);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						ps.close();
+						conn.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			return product;
+		}
+		
 
 	@Override
 	public Product removeProductById(Integer id) {
@@ -794,6 +801,8 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 		
 		return productToDelete;
 	}
+
+	
 
 
 

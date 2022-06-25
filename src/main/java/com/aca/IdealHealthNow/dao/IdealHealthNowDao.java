@@ -23,16 +23,13 @@ public interface IdealHealthNowDao {
 	public Patient createPatient(Patient patient);
 	public Patient updatePatient(Patient updatePatient);
 	public Patient deletePatient(Integer id);
-	public Appointment getAppointmentById(Integer id);
-	public Appointment createAppointment(Appointment appointment);
-	public Appointment updateAppointment(Appointment updateAppointment);
-	public Appointment deleteAppointmentById(Integer id);
 	public List<Product> getAllProducts();
 	public List<Product> getProductById(Integer id);
 	public List<Product> getProductByName(String name);
 	public List<Product> getProductsByProductType(String productType);
 	public List<Product> getProductsByCategory(String category);
 	public Product addProduct(Product product);
+	public Product updateProduct(Product product);
 	public Product removeProductById(Integer id);
 	
 	

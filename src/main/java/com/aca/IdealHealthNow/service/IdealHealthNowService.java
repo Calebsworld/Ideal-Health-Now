@@ -111,24 +111,7 @@ public class IdealHealthNowService {
 	public List<Patient> getPatientsByFullName(String patientFirstName, String patientLastName) {
 		return idealHealthNowDao.getPatientsByFullName(patientFirstName, patientLastName);
 	}
-
-	// Appointments
 	
-	public Appointment getAppointmentById(Integer id) {
-		return idealHealthNowDao.getAppointmentById(id);
-	}
-
-	public Appointment createAppointment(Appointment appt) {
-		return idealHealthNowDao.createAppointment(appt);
-	}
-
-	public Appointment updateAppointment(Appointment appt) {
-		return idealHealthNowDao.updateAppointment(appt);
-	}
-
-	public Appointment deleteAppointmentById(Integer id) {
-		return idealHealthNowDao.deleteAppointmentById(id);
-	}
 
 	public List<Product> getAllProducts() {
 		return idealHealthNowDao.getAllProducts();
@@ -159,6 +142,10 @@ public class IdealHealthNowService {
 
 	public List<Product> getProductsByProductType(String productType) {
 		return idealHealthNowDao.getProductsByProductType(productType);
+	}
+
+	public Product updateProduct(Product product) {
+		return idealHealthNowDao.updateProduct(product);
 	}
 
 
