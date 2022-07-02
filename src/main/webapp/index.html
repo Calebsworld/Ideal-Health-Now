@@ -20,12 +20,10 @@
 	<script src="JS/index.js"></script>
 	<script src="JS/adminController.js"></script>
 	<script src="JS/createController.js"></script>
-	<script src="JS/updateController.js"></script>
-	
-	<!--<script src="JS/adminController.js"></script>
-	<script src="JS/updateController.js"></script>
-	<script src="JS/createController.js"></script>  -->
-	
+	<script src="JS/updateController.js"></script>	
+	<script src="JS/productsController.js"></script>
+	<script src="JS/cartController.js"></script>
+	<script src="JS/userController.js"></script>
 	<link rel="stylesheet" href="./CSS/index.css">
 	<script src="https://kit.fontawesome.com/56f6b9a70d.js" crossorigin="anonymous"></script>
 	
@@ -33,24 +31,39 @@
 	
 </head>
 <body class="bg-light">
-  <nav class="navbar navbar-expand-md navbar-dark justify-content-center" id="navbar">
+  <nav class="navbar navbar-expand-sm navbar-dark justify-content-center fixed-top" id="navbar">
         <a class="navbar-brand d-flex" href="#!main.html">Ideal Health Now</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li class="nav-item active"><a href="#!main" class="nav-link">Home</a></li>
-            <li class="nav-item"> <a href="#!about"  class="nav-link"> About</a></li>
-            <li class="nav-item"> <a href="#!ourteam"  class="nav-link"> Our Team</a></li>
-            <li class="nav-item"> <a href="#!products" class = "nav-link">Products</a></li>
-            <li class="nav-item"> <a href="#!location"  class="nav-link"> Location</a></li>
+            <li class="nav-item">
+            	<a href="#!main" class="nav-link"><i class="fa-solid fa-house mr-1"></i>Home</a>
+            </li>
+            <li class="nav-item"> 
+            	<a href="#!about"  class="nav-link"><i class="fa-solid fa-circle-question mr-1"></i> About</a>
+            </li>
+            <li class="nav-item">
+            	<a href="#!ourteam"  class="nav-link"><i class="fa-solid fa-people-group mr-1"></i> Our Team</a>
+            </li>
+            <li class="nav-item"> 
+            	<a href="#!products" class = "nav-link"><i class="fa-solid fa-leaf mr-1"></i>Products</a>
+            </li>
+            <li class="nav-item"> 
+            	<a href="#!location"  class="nav-link"><i class="fa-solid fa-location-dot mr-1"></i> Location</a>
+            </li>
         </ul>
         <ul class="navbar-nav ml-auto">
         	<li class="nav-item">
-        		<a href="#!admin" class="nav-link"><i class="fa-regular fa-user mr-1"></i>Admin</a>
+        		<a href="#!user" class="nav-link"><i class="fa-regular fa-user mr-1"></i>User</a>
         	</li>
-        	
+        	<li class="nav-item">
+        		<a href="#!cart" class="nav-link"><i class="fa-solid fa-cart-shopping mr-1"></i>Cart</a>
+        	</li>
+        	<li class="nav-item">
+        		<a href="#!admin" class="nav-link">Admin</a>
+        	</li>
         </ul>
   </nav>
 

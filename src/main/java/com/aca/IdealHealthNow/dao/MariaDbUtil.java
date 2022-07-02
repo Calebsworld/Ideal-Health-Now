@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class MariaDbUtil {
 
-	private static final String CONNECTION_URL =  "jdbc:mariadb://localhost:3306/schedulingapp?user=root&password=Truth4001!";
+	private static final String CONNECTION_URL =  "jdbc:mariadb://localhost:3306/idealhealthnow?user=root&password=Truth4001!";
 	
 	public static Connection getConnection() {
 		Connection conn = null;

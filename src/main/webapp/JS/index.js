@@ -10,10 +10,17 @@
 		.when("/ourteam", {
 			templateUrl : "ourteam.html"})
 		.when("/products", {
-			templateUrl : "products.html"})
+			templateUrl : "products.html",
+			controller : "productsController"})
 		.when("/admin", {
 			templateUrl : "admin.html",
 			controller : "adminController" })
+		.when("/user", {
+			templateUrl : "user.html",
+			controller : "userController" })
+		.when("/cart", {
+			templateUrl : "cart.html",
+			controller : "cartController" })
 		.when("/update/:productId", {
 			templateUrl : "update.html",
 			controller : "updateController" })

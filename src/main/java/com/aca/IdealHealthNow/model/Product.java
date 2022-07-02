@@ -7,13 +7,17 @@ public class Product {
 	private Integer id;
 	private String productName;
 	private ProductType productType;
-	private String category; 
 	private String description;
+	private String img;
+	private String quantity;
 	private LocalDateTime UpdateDateTime;
 	private LocalDateTime CreateDateTime;
 
-	public Product() {
-
+	public String getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
 	}
 	
 	public Integer getId() {
@@ -34,15 +38,19 @@ public class Product {
 	public void setProductType(ProductType productType) {
 		this.productType = productType;
 	}
-	public String getCategory() {
-		return category;
+
+	public String getImg() {
+		return img;
 	}
-	public void setCategory(String category) {
-		this.category = category;
+
+	public void setImg(String img) {
+		this.img = img;
 	}
+	
 	public String getDescription() {
 		return description;
 	}
+	
 	public void setDescription(String description) {
 		this.description = description;
 	}

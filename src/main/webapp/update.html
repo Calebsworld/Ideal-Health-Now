@@ -1,4 +1,6 @@
-<div class="row">
+<div class="container-fluid">
+	<div class="row mt-5"></div>
+<div class="row mt-5">
 	<div class="col-sm-7">
 		<div class="card bg-light">
 			<div class="card-header text-center">
@@ -22,14 +24,6 @@
 								class="form-control" id="productType"></select>	
 					</div>			
 					<div class="form-group">
-						<label for="category" class="font-weight-bold">Category:</label>
-						<input ng-model="product.category" required ng-minlength="2" name="category"
-						type="text" class="form-control" id="category">
-						<span class="text-danger" ng-if="!updateForm.category.$valid"> 
-							required and must be at least 2 characters
-						</span>
-					</div>
-					<div class="form-group">
 						<label for="description" class="font-weight-bold">Description:</label>
 						<input ng-model="product.description" required ng-minlength="2" name="description"
 						type="text" class="form-control" id="description">
@@ -37,6 +31,17 @@
 							required and must be at least 2 characters
 						</span>
 					</div>		
+					<div class="form-group">
+							<label for="img" class="font-weight-bold">Img:</label>
+							<input ng-model="product.img" required
+								name="img" type="text" class="form-control"
+								id="img"> 
+								<span
+								ng-show="createForm.img.$touched && createForm.img.$invalid"
+								class="text-danger"> Required field 
+								</span>
+						</div>
+					
 				</form>
 			</div>
 			<div class="card-footer text-center">
@@ -48,7 +53,8 @@
 	</div>
 	<div class="col-sm-5">		
 		<div class="pt-5">
-		<img class="img-fluid rounded-circle" src="">
+		<img class="img-fluid rounded-circle" src="./Images/ideal-health-now-fav-products.jpeg">
 		</div>
 	</div>
+</div>
 </div>

@@ -8,543 +8,73 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.aca.IdealHealthNow.model.Appointment;
-import com.aca.IdealHealthNow.model.Coach;
-import com.aca.IdealHealthNow.model.Patient;
 import com.aca.IdealHealthNow.model.Product;
 import com.aca.IdealHealthNow.model.ProductType;
 
 
 
+
 public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 
-	private static String SelectAllCoaches = 
-			"SELECT id, firstName, lastName, updateDateTime, createDateTime " +
-			"FROM coaches " ;
-	
-	private static String SelectCoachById = 
-			"SELECT id, firstName, lastName, updateDateTime, createDateTime " +
-			"FROM coaches " +
-			"WHERE id = ? ";
-	
-	private static String SelectCoachByFullName = 
-			"SELECT id, firstName, lastName, updateDateTime, createDateTime " +
-			"FROM coaches " +
-			"WHERE firstName = ? AND lastName = ? ";
-	
-	private static String createCoach =
-			"INSERT INTO coaches (firstName, lastName) " +
-					"VALUES " +
-					"(?, ?)";
-	
-	private static String selectNewCoachId = 
-			"SELECT LAST_INSERT_ID() AS coachId ";
-	
-	private static String updateCoachById = 
-			"UPDATE coaches " +
-			"SET firstName = ?, lastName = ? " +
-			"WHERE id = ? ";
-	
-	private static String deleteCoachById = 
-			"DELETE FROM coaches " +
-			"WHERE id = ? ";
-	
-	private static String selectAllPatients = 
-			"SELECT id, firstName, lastName, emailAddress, phoneNumber, updateDateTime, CreateDateTime " + 
-			"FROM patients ";
-	
-	private static String selectPatientById = 
-			"SELECT id, firstName, lastName, emailAddress, phoneNumber, updateDateTime, CreateDateTime " + 
-					"FROM patients " + 
-					"WHERE id = ? ";
-	
-	private static String selectPatientByFullName = 
-			"SELECT id, firstName, lastName, emailAddress, phoneNumber, updateDateTime, CreateDateTime " + 
-					"FROM patients " + 
-					"WHERE firstName = ? AND lastName = ? ";
-	
-	private static String selectNewPatientId = 
-			"Select Last_Insert_ID() As patientId ";
-	
-	private static String createPatient = 
-			"INSERT into patients (firstName, lastName, emailAddress, phoneNumber) " +
-			"VALUES " + 
-			"(?, ?, ?, ?) ";
-			
-	private static String updatePatientById =
-			"UPDATE patients " +
-			"SET firstName = ?, lastName = ?, emailAddress = ?, phoneNumber = ? " +
-			"WHERE id = ? "; 
-	
-	private static String deletePatientById =
-			"DELETE FROM patients " +
-			"WHERE id = ? ";
-	
-	
-	
-	
-	
-	private static String selectAllProducts = 
-			"SELECT id, productName, productType, category, description, updateDateTime, CreateDateTime " + 
+	private static final String SELECT_ALL_FROM_PRODUCTS = 
+			"SELECT id, productName, productType, description, img, updateDateTime, CreateDateTime " +
 			"FROM products ";
 	
+	private static String selectAllProducts = SELECT_ALL_FROM_PRODUCTS;
+	
 	private static String selectProductById = 
-			"SELECT id, productName, productType, category, description, updateDateTime, CreateDateTime " +
-			"FROM products " +
+			SELECT_ALL_FROM_PRODUCTS +
 			"WHERE id = ? ";
 	
 	private static String selectProductByProductName = 
-			"Select id, productName, productType, category, description, updateDateTime, CreateDateTime " +
-			"FROM products " +
+			SELECT_ALL_FROM_PRODUCTS +
 			"WHERE productName = ? ";
 	
 	private static String selectProductsByProductType = 
-			"Select id, productName, productType, category, description, updateDateTime, CreateDateTime " +
-					"FROM products " +
-					"WHERE productType = ? ";
+			SELECT_ALL_FROM_PRODUCTS +
+			"WHERE productType = ? ";
 	
 	private static String selectProductsByCategory = 
-			"Select id, productName, productType, category, description, updateDateTime, CreateDateTime " +
-			"From products " +
+			SELECT_ALL_FROM_PRODUCTS +
 			"WHERE category = ? ";
 	
 	private static String selectNewProductId = 
 			"SELECT LAST_INSERT_ID() AS productId ";
 	
 	private static String addProduct = 
-			"INSERT into products(productName, productType, category, description) " +
+			"INSERT into products(productName, productType, description, img) " +
 			"VALUES " +
 			"(?, ?, ?, ?) ";
 	
 	private static String updateProductById = 
 			"UPDATE products " +
-			"SET productName = ?, productType = ?, category = ?, description = ? " +
+			"SET productName = ?, productType = ?, description = ?, img = ? " +
 			"WHERE id = ? ";
 	
 	private static String removeProductById = 
 			"DELETE from products " +
 			"WHERE id = ? ";
 	
-	@Override
-	public List<Coach> getCoaches() {
-		List<Coach> coaches = new ArrayList<>();
-		ResultSet rs = null;
-		Statement st = null;
-		
-		Connection conn = MariaDbUtil.getConnection();
-		try {
-			st = conn.createStatement();
-			rs = st.executeQuery(SelectAllCoaches);
-			coaches = makeCoaches(rs);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				rs.close();
-				st.close();
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return coaches;
-	}
+	private static String selectNewUserId = 
+			" SELECT LAST_INSERT_ID() AS userId ";
 	
-	private List<Coach> makeCoaches(ResultSet result) throws SQLException {
-		List <Coach> coaches = new ArrayList<>();
-		while (result.next()) {
-			Coach coach = new Coach();
-			coach.setCoachId(result.getInt("id"));
-			coach.setFirstName(result.getString("firstName"));
-			coach.setLastName(result.getString("lastName"));
-			coach.setUpdateDateTime(result.getObject("updateDateTime", LocalDateTime.class));
-			coach.setCreateDateTime(result.getObject("createDateTime", LocalDateTime.class));
-			coaches.add(coach);
-		}
-		return coaches;
-	}
+	private static String createUser = 
+			" INSERT into users(firstName, lastName, email, cartId) " +
+			" VALUES " +
+			" (?, ?, ?) ";
 	
-	@Override
-	public List<Coach> getCoachByFullName(String coachFirstName, String coachLastName) {
-		List<Coach> coachesByFullName = new ArrayList<>();
-		ResultSet rs = null;
-		PreparedStatement ps = null;
-		
-		Connection conn = MariaDbUtil.getConnection();
-		try {
-			ps = conn.prepareStatement(SelectCoachByFullName);
-			ps.setString(1, coachFirstName);
-			ps.setString(2, coachLastName);
-			rs = ps.executeQuery();
-			coachesByFullName = makeCoaches(rs);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				rs.close();
-				ps.close();
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return coachesByFullName;
-	}
-
-	@Override
-	public List<Coach> getCoachById(Integer id) {
-		List<Coach> coaches = new ArrayList<>();
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+	private static String selectNewCartId = 
+			" SELECT LAST_INSERT_ID() AS cartId ";
 	
-		Connection conn = MariaDbUtil.getConnection();
-		try {
-			ps = conn.prepareStatement(SelectCoachById);
-			ps.setInt(1, id);
-			rs = ps.executeQuery();
-			coaches = makeCoaches(rs);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				rs.close();
-				ps.close();
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+	private static String createCart = 
+			" INSERT into cart(userId) " +
+			" VALUES " +
+			" (?) ";
 	
-		return coaches;
-	}
-
-	private Integer getNewCoachId(Connection conn) {
-		ResultSet rs = null;
-		Statement st = null;
-		Integer newCoachId = null;
-		
-		try {
-			st = conn.createStatement();
-			rs = st.executeQuery(selectNewCoachId);
-			while (rs.next()) {
-				newCoachId = rs.getInt("id");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				rs.close();
-				st.close();
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return newCoachId;
-	}
-	
-	@Override
-	public Coach createCoach(Coach coach) {
-		int updateRowCount = 0;
-		Connection conn = MariaDbUtil.getConnection();
-		PreparedStatement ps = null;
-		try {
-			ps = conn.prepareStatement(createCoach);
-			ps.setString(1, coach.getFirstName());
-			ps.setString(2, coach.getLastName());
-			updateRowCount = ps.executeUpdate();
-			System.out.println("Rows updated: " + updateRowCount);
-			Integer newCoachId = getNewCoachId(conn);
-			coach.setCoachId(newCoachId);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				ps.close();
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return coach;
-	}
-
-	@Override
-	public Coach updateCoach(Coach updateCoach) {
-		List <Coach> coaches = this.getCoachById(updateCoach.getCoachId());
-		if (coaches.size() > 0) {
-			int updateRowCount = 0;
-			PreparedStatement ps = null;
-			
-			Connection conn = MariaDbUtil.getConnection();
-			try {
-				ps = conn.prepareStatement(updateCoachById);
-				ps.setString(1, updateCoach.getFirstName());
-				ps.setString(2, updateCoach.getLastName());
-				ps.setInt(3, updateCoach.getCoachId());
-				updateRowCount = ps.executeUpdate();
-				System.out.println("Rows updated: " + updateRowCount);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					ps.close();
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}	
-			}
-		}
-		
-		return updateCoach;
-	}
-
-	@Override
-	public Coach deleteCoach(Integer id) {
-		List <Coach> coaches = this.getCoachById(id);
-		Coach coachToDelete = null;
-		if (coaches.size() > 0) {
-			coachToDelete = coaches.get(0);
-			int updateRowCount = 0;
-			PreparedStatement ps = null;
-			
-			Connection conn = MariaDbUtil.getConnection();
-			try {
-				ps = conn.prepareStatement(deleteCoachById);
-				ps.setInt(1, id);
-				updateRowCount = ps.executeUpdate();
-				System.out.println("Rows updated: " + updateRowCount);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					ps.close();
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		return coachToDelete;
-	}
-
-	private List<Patient> makePatients(ResultSet rs) throws SQLException {
-		List<Patient> patients = new ArrayList<>();
-		
-		while (rs.next()) {
-			Patient patient = new Patient();
-			patient.setPatientId(rs.getInt("id"));
-			patient.setFirstName(rs.getString("firstName"));
-			patient.setLastName(rs.getString("lastName"));
-			patient.setEmailAddress(rs.getString("emailAddress"));
-			patient.setPhoneNumber(rs.getString("phoneNumber"));
-			patient.setUpdateDateTime(rs.getObject("updateDateTime", LocalDateTime.class));
-			patient.setCreateDateTime(rs.getObject("createDateTime", LocalDateTime.class));
-			patients.add(patient);
-			}
-		
-		return patients;
-	}
-	
-	@Override
-	public List<Patient> getPatients() {
-			List<Patient> patients = new ArrayList<>();
-			ResultSet rs = null;
-			Statement st = null;
-			
-			Connection conn = MariaDbUtil.getConnection();
-			try {
-				st = conn.createStatement();
-				rs = st.executeQuery(selectAllPatients);
-				patients = this.makePatients(rs);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					rs.close();
-					st.close();
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		
-		return patients;
-	}
-
-	@Override
-	public List<Patient> getPatientsById(Integer id) {
-		List<Patient> patients = this.getPatients();
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		
-		Connection conn = MariaDbUtil.getConnection();
-		try {
-			ps = conn.prepareStatement(selectPatientById);
-			ps.setInt(1, id);
-			rs = ps.executeQuery();
-			patients = makePatients(rs);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				rs.close();
-				ps.close();
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-		}
-		
-		return patients;
-	}
-
-	private Integer getNewPatientId(Connection conn) {
-		ResultSet rs = null;
-		Statement st = null;
-		Integer newPatientId = null;
-		
-		try {
-			st = conn.createStatement();
-			rs = st.executeQuery(selectNewPatientId);
-			while (rs.next()) {
-				newPatientId = rs.getInt("id");
-			}
-		} catch (SQLException e) {
-			try {
-				rs.close();
-				st.close();
-				conn.close();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		}
-
-		return newPatientId;
-	}
-	
-	@Override
-	public List<Patient> getPatientsByFullName(String patientFirstName, String patientLastName) {
-		List<Patient> patientsByFullName = new ArrayList<>();
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		
-		Connection conn = MariaDbUtil.getConnection();
-		try {
-			ps = conn.prepareStatement(selectPatientByFullName);
-			ps.setString(1, patientFirstName);
-			ps.setString(2, patientLastName);
-			rs = ps.executeQuery();
-			patientsByFullName = makePatients(rs);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				rs.close();
-				ps.close();
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return patientsByFullName;
-	}
-	
-	@Override
-	public Patient createPatient(Patient patient) {
-		int updateRowCount = 0;
-		PreparedStatement ps = null;
-		
-		Connection conn = MariaDbUtil.getConnection();
-		try {
-			ps = conn.prepareStatement(createPatient);
-			ps.setString(1, patient.getFirstName());
-			ps.setString(2, patient.getLastName());
-			ps.setString(3, patient.getEmailAddress());
-			ps.setString(4, patient.getPhoneNumber());
-			updateRowCount = ps.executeUpdate();
-			System.out.println("rows updated: " + updateRowCount);
-			Integer newPatientId = getNewPatientId(conn);
-			patient.setPatientId(newPatientId);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} try {
-			ps.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	
-		return patient;
-	}
-
-	@Override
-	public Patient updatePatient(Patient updatePatient) {
-		List<Patient> patients = this.getPatientsById(updatePatient.getPatientId());
-		if (patients.size() > 0) {
-			int updateRowCount = 0;
-			PreparedStatement ps = null;
-			Connection conn = MariaDbUtil.getConnection();
-			try {
-				ps = conn.prepareStatement(updatePatientById);
-				ps.setString(1, updatePatient.getFirstName());
-				ps.setString(2, updatePatient.getLastName());
-				ps.setString(3, updatePatient.getEmailAddress());
-				ps.setString(4, updatePatient.getPhoneNumber());
-				ps.setInt(5, updatePatient.getPatientId());
-				updateRowCount = ps.executeUpdate();
-				System.out.println("rows updated: " + updateRowCount);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					ps.close();
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return updatePatient;
-	}
-
-	@Override
-	public Patient deletePatient(Integer id) {
-		Patient patientToDelete = null;
-		List<Patient> patients = getPatientsById(id);
-		if (patients.size() > 0) {
-			patientToDelete = patients.get(0);
-			int updateRowCount = 0;
-			PreparedStatement ps = null;
-			Connection conn = MariaDbUtil.getConnection(); 
-			try {
-				ps = conn.prepareStatement(deletePatientById);
-				ps.setInt(1, id);
-				updateRowCount = ps.executeUpdate();
-				System.out.println("rows updated: " + updateRowCount);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					ps.close();
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		return patientToDelete;
-	}
+	private static String selectUserId = 
+			" SELECT id " +
+			" FROM user " + 
+			" ";
 	
 	@Override
 	public List<Product> getAllProducts() {
@@ -578,8 +108,8 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 			product.setProductName(rs.getString("productName"));
 			String productTypeValue = rs.getString("productType");
 			product.setProductType(ProductType.convertStringToProductType(productTypeValue));
-			product.setCategory(rs.getString("category"));
 			product.setDescription(rs.getString("description"));
+			product.setImg(rs.getString("img"));
 			product.setUpdateDateTime(rs.getObject("updateDateTime", LocalDateTime.class));
 			product.setCreateDateTime(rs.getObject("createDateTime", LocalDateTime.class));
 			products.add(product);
@@ -723,8 +253,8 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 			ps = conn.prepareStatement(addProduct);
 			ps.setString(1, product.getProductName());
 			ps.setString(2, product.getProductType().toString());
-			ps.setString(3, product.getCategory());
-			ps.setString(4, product.getDescription());
+			ps.setString(3, product.getDescription());
+			ps.setString(4, product.getImg());
 			updateRowCount = ps.executeUpdate();
 			Integer newProductId = getNewProductId(conn);
 			product.setId(newProductId);
@@ -753,8 +283,8 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 					ps = conn.prepareStatement(updateProductById);
 					ps.setString(1, product.getProductName());
 					ps.setString(2, product.getProductType().toString());
-					ps.setString(3, product.getCategory());
-					ps.setString(4, product.getDescription());
+					ps.setString(3, product.getDescription());
+					ps.setString(4, product.getImg());
 					ps.setInt(5, product.getId());
 					updateRowCount = ps.executeUpdate();
 					System.out.println("rows updated: " + updateRowCount);
@@ -802,6 +332,9 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 		return productToDelete;
 	}
 
+
+
+	
 	
 
 

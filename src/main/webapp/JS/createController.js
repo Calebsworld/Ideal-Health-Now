@@ -19,8 +19,8 @@
 		$scope.clear = function() {
 			$scope.product.productName = "";
 			$scope.product.productType = "";
-			$scope.product.category = "";
 			$scope.product.description = "";
+			$scope.product.img = "";
 			$scope.disableCreate = false;
 			$scope.createForm.$setUntouched();
 			$scope.createForm.$setPristine();
