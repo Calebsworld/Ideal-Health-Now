@@ -3,11 +3,6 @@
 	var myApp = angular.module('app');
 	myApp.controller('userController', function($scope, $http, $location){
 		
-		
-	
-		
-		
-		
 		$scope.clear = function() {
 			$scope.user.firstName = "";
 			$scope.user.lastName = "";

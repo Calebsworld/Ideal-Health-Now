@@ -1,10 +1,9 @@
-/**
-* Access the previously created module 'app'
-* and create a controller associated with our module. 
-*/
 
-let myApp = angular.module('app');
+(function() {
+	
+	var myApp = angular.module('app');
 myApp.controller('adminController', function($scope, $http, $location) {
+	
 	$scope.getAllProducts = function() {
 		$http.get('/idealhealthnow/webapi/home/products')
 		.then(function(response) {
@@ -25,5 +24,8 @@ myApp.controller('adminController', function($scope, $http, $location) {
 		$location.path('/create');
 	}
 	
+	});
 	
-});
+})();
+
+	

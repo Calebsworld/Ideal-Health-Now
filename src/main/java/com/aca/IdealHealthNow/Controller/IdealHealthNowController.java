@@ -38,24 +38,17 @@ public class IdealHealthNowController {
 			return service.getProductById(id);
 		}
 	    
-	    @Path("/products/productname")
+	    @Path("/products/productName")
 	    @GET
 	    @Consumes(MediaType.APPLICATION_JSON)
 		public List<Product> getProductByName(@QueryParam ("productNameValue") String name) {
 			return service.getProductByName(name);
 		}
 
-	    @Path("/products/category")
-		@GET
-		@Consumes(MediaType.APPLICATION_JSON)
-		public List<Product> getProductsByCategory(@QueryParam ("categoryValue") String category) {
-			return service.getProductsByCategory(category);
-		}
-
-	    @Path ("/products/producttype/{productTypeValue}")
+	    @Path ("/products/productType")
 	    @GET
 	    @Consumes(MediaType.APPLICATION_JSON)
-	    public List<Product> getProductsByProductType(@PathParam ("productTypeValue") String productType) {
+	    public List<Product> getProductsByProductType(@QueryParam("productTypeValue") String productType) {
 	    	return service.getProductsByProductType(productType);
 	    }
 	    

@@ -6,12 +6,12 @@
 		.when("/main", {
 			templateUrl : "main.html" })
 		.when("/about", {
-			templateUrl : "about.html"})
+			templateUrl : "about.html" })
 		.when("/ourteam", {
-			templateUrl : "ourteam.html"})
+			templateUrl : "ourteam.html" })
 		.when("/products", {
 			templateUrl : "products.html",
-			controller : "productsController"})
+			controller : "productsController" })
 		.when("/admin", {
 			templateUrl : "admin.html",
 			controller : "adminController" })
@@ -30,9 +30,8 @@
 		.when("/location", {
 			templateUrl : "location.html" })
 		.otherwise({
-			templateUrl : "main.html"
-		});
+			templateUrl : "main.html" });
 		
-	})
+	});
 	
 })();

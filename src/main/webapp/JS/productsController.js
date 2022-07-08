@@ -1,7 +1,15 @@
 (function(){
 	
 	var myApp = angular.module('app');
-	myApp.controller('productsController', function($scope, $http, $location, $routeParams){
+	myApp.controller('productsController', function($scope, $http){
+
+
+	$scope.filterProducts = false;
+	
+	$scope.filter = function() {
+		$scope.filterProducts = true;
+		$scope.showProducts();
+	};
 	
 	$scope.getAllProducts = function() {
 		$http.get('/idealhealthnow/webapi/home/products')
@@ -11,11 +19,46 @@
 			console.log('error http GET products: ' + response.status);	
 		});
 	} 
-	$scope.getAllProducts();	
-		
-		
-		
-		
+
+	$scope.getProductsByType = function() {
+		var config = { params : $scope.productType };
+		$http.get('/idealhealthnow/webapi/home/products/productType', config)
+			.then(function(response) {
+					$scope.products = response.data;
+				}, function error(response) {
+					console.log("Error http GET products by type");
+				});
+	};
+	
+	$scope.showProducts = function() {
+		if ($scope.filterProducts === true) {
+			$scope.getProductsByType();
+		} else {
+			$scope.getAllProducts();
+		}	
+	};
+	
+	$scope.showProducts();
+	
+	$scope.clearFilter = function() {
+		$scope.productType = "";
+		$scope.filterProducts = false;
+		$scope.showProducts();
+	};
+	
+	$scope.addToCart = function(item) {
+			if (localStorage.getItem('cart') != null) {
+				$scope.cart = JSON.parse(localStorage.getItem('cart'));
+				$scope.cart.push(item);
+				localStorage.setItem('cart', JSON.stringify($scope.cart));
+			} else {
+				// new cart
+				$scope.cart = [item];
+				localStorage.setItem('cart', JSON.stringify($scope.cart));
+			}
+				$scope.success = "Item successfully added to cart!";			
+		}	
+	
 	})
 	
 })();

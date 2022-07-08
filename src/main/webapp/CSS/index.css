@@ -6,16 +6,8 @@
 	background-color : #012849;
 }
 
-#aboutBanner {
-	background-image : url('../Images/diet.jpg');
-	background-size: cover;
-	height: 75vh;
-}
-
 #coachesBanner {
-	background-image : url('../Images/ideal-health-coach-benefits.webp');
-	background-size: cover;
-	height: 140vh;
+	background-color : #012849;
 }
 
 #productsBanner {
@@ -25,4 +17,10 @@
 #cartBanner {
 	background-color : #012849;	
 }
+
+#productInput {
+	width : 60%;
+}
+
+
 
