@@ -54,28 +54,7 @@ public class IdealHealthNowDaoImpl implements IdealHealthNowDao {
 	private static String removeProductById = 
 			"DELETE from products " +
 			"WHERE id = ? ";
-	
-	private static String selectNewUserId = 
-			" SELECT LAST_INSERT_ID() AS userId ";
-	
-	private static String createUser = 
-			" INSERT into users(firstName, lastName, email, cartId) " +
-			" VALUES " +
-			" (?, ?, ?) ";
-	
-	private static String selectNewCartId = 
-			" SELECT LAST_INSERT_ID() AS cartId ";
-	
-	private static String createCart = 
-			" INSERT into cart(userId) " +
-			" VALUES " +
-			" (?) ";
-	
-	private static String selectUserId = 
-			" SELECT id " +
-			" FROM user " + 
-			" ";
-	
+		
 	@Override
 	public List<Product> getAllProducts() {
 		List <Product> products = new ArrayList<>();		

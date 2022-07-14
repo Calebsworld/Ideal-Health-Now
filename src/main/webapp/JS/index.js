@@ -1,6 +1,6 @@
 (function() {
 	
-	var app = angular.module('app', ['ngRoute']);
+	var app = angular.module('app', ['ngRoute', 'ngAnimate']);
 	app.config(function($routeProvider){
 		$routeProvider
 		.when("/main", {
@@ -15,9 +15,6 @@
 		.when("/admin", {
 			templateUrl : "admin.html",
 			controller : "adminController" })
-		.when("/user", {
-			templateUrl : "user.html",
-			controller : "userController" })
 		.when("/cart", {
 			templateUrl : "cart.html",
 			controller : "cartController" })
@@ -27,8 +24,6 @@
 		.when("/create", {
 			templateUrl : "create.html",
 			controller : "createController" })
-		.when("/location", {
-			templateUrl : "location.html" })
 		.otherwise({
 			templateUrl : "main.html" });
 		

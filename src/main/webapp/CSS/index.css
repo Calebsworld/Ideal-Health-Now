@@ -2,6 +2,31 @@
 	background-color: #F05A0F;
 }
 
+main.ng-enter {
+  transition:0.5s linear all;
+  opacity:0;
+}
+
+/* The finishing CSS styles for the enter animation */
+main.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+#cartItem.ng-leave {
+  transition:0.3s linear all;
+  opacity:1;
+}
+
+/* The finishing CSS styles for the enter animation */
+#cartItem.ng-leave.ng-leave-active {
+  opacity:0;
+}
+
+#cartItem.ng-leave-stagger {
+  transition-delay:0.5s;
+  transition-duration: 0s;
+}
+
 #mainBanner {
 	background-color : #012849;
 }
@@ -18,9 +43,25 @@
 	background-color : #012849;	
 }
 
+#locationBanner {
+	background-color : #012849;	
+}
 #productInput {
 	width : 60%;
 }
 
+.carousel-control-next, .carousel-control-prev, .carousel-indicators {
+	filter: invert(100%);
+}
+.carousal-image{
+	width: auto;
+	height: 400px;
+	max-height: 400px;
+}
 
+.image-logo {
+	width: auto;
+	height: 250px;
+	max-height: 400px;
+}
 

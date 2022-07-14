@@ -25,10 +25,10 @@
 	</div>	
 	
 	<div class="row justify-content-center">
-		<div class="col-lg-4 m-5" ng-repeat="item in cart">
+		<div id="cartItem" class="col-lg-4 m-5" ng-repeat="item in cart">
 			<div class="card text-center">
 				<img class="card-img-top img-fluid img-thumbnail mx-auto d-block"
-					src="{{item.img}}" id="itemImg" alt="Product image">
+					src="{{item.img}}" id="itemImg" alt="Item image">
 				<div class="card-body">
 					<h4 class="card-title">{{item.productName}}</h4>
 					<p class="card-text">

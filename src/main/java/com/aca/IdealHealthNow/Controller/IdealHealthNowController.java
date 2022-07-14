@@ -45,10 +45,10 @@ public class IdealHealthNowController {
 			return service.getProductByName(name);
 		}
 
-	    @Path ("/products/productType")
+	    @Path ("/products/productType/{productTypeValue}")
 	    @GET
 	    @Consumes(MediaType.APPLICATION_JSON)
-	    public List<Product> getProductsByProductType(@QueryParam("productTypeValue") String productType) {
+	    public List<Product> getProductsByProductType(@PathParam("productTypeValue") String productType) {
 	    	return service.getProductsByProductType(productType);
 	    }
 	    

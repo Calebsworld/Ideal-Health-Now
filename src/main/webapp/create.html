@@ -22,7 +22,7 @@ body {
 							<label for="productName" class="font-weight-bold">Product
 								Name:</label> <input ng-model="product.productName" required
 								ng-minlength="2" name="productName" type="text"
-								class="form-control" id="productName"> <span
+								class="form-control" id="productName" placeholder="Enter product name"> <span
 								ng-show="createForm.productName.$touched && createForm.productName.$invalid"
 								class="text-danger">  Required field. Must be at least five
 								characters. </span>
@@ -31,14 +31,15 @@ body {
 							<label for="productType" class="font-weight-bold">Product
 								Type:</label> <select ng-options="value for value in productTypes"
 								required name="productType" ng-model="product.productType"
-								class="form-control" id="productType"></select>
+								class="form-control" id="productType"> <option value="" disabled selected>Select product type</option>	
+								</select>
 						</div>
 
 						<div class="form-group">
 							<label for="description" class="font-weight-bold">Description:</label>
 							<input ng-model="product.description" required ng-minlength="5"
 								name="description" type="text" class="form-control"
-								id="description"> <span
+								id="description" placeholder="Enter product description"> <span
 								ng-show="createForm.description.$touched && createForm.description.$invalid"
 								class="text-danger"> Required field. Must be at least five
 								characters. </span>
@@ -47,7 +48,7 @@ body {
 							<label for="img" class="font-weight-bold">Img:</label>
 							<input ng-model="product.img" required
 								name="img" type="text" class="form-control"
-								id="img"> 
+								id="img" placeholder="Enter product image url"> 
 								<span
 								ng-show="createForm.img.$touched && createForm.img.$invalid"
 								class="text-danger"> Required field 

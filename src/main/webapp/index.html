@@ -27,20 +27,18 @@
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+	<script src="./Lib/angular-animate.min.js"></script>
 <script src="JS/index.js"></script>
 <script src="JS/adminController.js"></script>
 <script src="JS/createController.js"></script>
 <script src="JS/updateController.js"></script>
 <script src="JS/productsController.js"></script>
 <script src="JS/cartController.js"></script>
-<script src="JS/userController.js"></script>
 <script src="JS/headerController.js"></script>
 <link rel="stylesheet" href="./CSS/index.css">
 <script src="https://kit.fontawesome.com/56f6b9a70d.js"
 	crossorigin="anonymous"></script>
-
-
-
+	
 </head>
 
 <body class="bg-light">
@@ -63,12 +61,8 @@
 						class="fa-solid fa-people-group mr-1"></i> Our Team</a></li>
 				<li ng-class="{ active : isActive('/products')}" class="nav-item"><a href="#!products" class="nav-link"><i
 						class="fa-solid fa-leaf mr-1"></i>Products</a></li>
-				<li ng-class="{ active : isActive('/location')}" class="nav-item"><a href="#!location" class="nav-link"><i
-						class="fa-solid fa-location-dot mr-1"></i> Location</a></li>
 			</ul>
 			<ul class="navbar-nav ml-auto">
-				<li ng-class="{ active : isActive('/user')}" class="nav-item"><a href="#!user" class="nav-link"><i
-						class="fa-regular fa-user mr-1"></i>User</a></li>
 				<li ng-class="{ active : isActive('/cart')}" class="nav-item"><a href="#!cart" class="nav-link"><i
 						class="fa-solid fa-cart-shopping mr-1"></i>Cart</a></li>
 				<li ng-class="{ active : isActive('/admin')}" class="nav-item"><a href="#!admin" class="nav-link"><i
@@ -76,7 +70,7 @@
 			</ul>
 		</div>
 	</nav>
-	<div ng-view></div>
+	<main ng-view></main>
 
 
 </body>

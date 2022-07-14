@@ -1,8 +1,9 @@
 (function(){
 	
 	var myApp = angular.module('app');
-	myApp.controller('productsController', function($scope, $http){
+	myApp.controller('productsController', function($scope, $http, $timeout){
 
+	$scope.productTypes = ['Food', 'Supplement'];
 
 	$scope.filterProducts = false;
 	
@@ -21,8 +22,7 @@
 	} 
 
 	$scope.getProductsByType = function() {
-		var config = { params : $scope.productType };
-		$http.get('/idealhealthnow/webapi/home/products/productType', config)
+		$http.get(`/idealhealthnow/webapi/home/products/productType/${$scope.productType}`)
 			.then(function(response) {
 					$scope.products = response.data;
 				}, function error(response) {
@@ -46,18 +46,31 @@
 		$scope.showProducts();
 	};
 	
+	$scope.success = false;
+	
 	$scope.addToCart = function(item) {
 			if (localStorage.getItem('cart') != null) {
 				$scope.cart = JSON.parse(localStorage.getItem('cart'));
-				$scope.cart.push(item);
+				$scope.cart.push(item);	
 				localStorage.setItem('cart', JSON.stringify($scope.cart));
 			} else {
 				// new cart
 				$scope.cart = [item];
 				localStorage.setItem('cart', JSON.stringify($scope.cart));
 			}
-				$scope.success = "Item successfully added to cart!";			
-		}	
+				$scope.success = true;	
+				$scope.successMessage = "Item successfully added to cart";	
+	
+			$timeout(function () {
+				$scope.closeAlert();
+			}, 4000);		
+			
+		}
+		
+		$scope.closeAlert = function () {
+			$scope.success = false;
+		}
+	
 	
 	})
 	
